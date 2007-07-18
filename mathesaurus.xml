@@ -1,0 +1,4708 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mathesaurus>
+<modified>Time-stamp: "2007-06-15T17:27:54 vidar"</modified>
+
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <dc:title>Numerical Python, MATLAB, R, Gnuplot cross-reference</dc:title>
+  <dc:date>Wed, 22 Feb 2006 19:01:08 +0100</dc:date>
+  <dc:creator>Gundersen, Vidar Bronken</dc:creator>
+  <!--<dc:contributor>Hankin, Robin</dc:contributor>-->
+  <dc:contributor>Ruben, Gary</dc:contributor>
+  <dc:description>
+    The idea of this document (and the corresponding XML instance)
+    is to provide a quick reference for switching
+    from Matlab, IDL, Maple or similar
+    to an open-source environment, such as
+    Python with numpy and matplotlib modules,
+    R, Octave, Scilab and Gnuplot, Axiom or Maxima
+    for numeric processing, data visualisation and symbolic algebra.
+
+    Where Octave, Scilab (and FreeMat) commands are omitted,
+    expect Matlab compatibility, and similarly
+    where non given use the generic command.
+
+    Similarly, for Python, NumPy or matplotlib have precedence over
+    the Numeric and Numarray modules which will be phased out,
+    differences are kept in this reference to aid users in their
+    transition from Numeric/numarray to NumPy.
+
+  </dc:description>
+  <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+  <license rdf:resource="http://creativecommons.org/licenses/by-sa/2.5/">
+    Copyright (c)2006 Vidar Bronken Gundersen
+    http://mathesaurus.sf.net/
+    Permission is granted to copy, distribute and/or modify this document
+    as long as the above attribution is kept and the resulting work is
+    distributed under a license identical to this one.
+  </license>
+</rdf:RDF>
+
+<!--
+    To-do list:
+    Plotting: Scilab, histogram, 3d gnuplot.py/dislin/VTK
+    Matrix/vector multiplication
+    Curve fitting, interpolation and regression
+    FreeMat
+-->
+
+
+<section>
+  <title>Help</title>
+
+  <group>
+  <command>
+    <description>Browse help interactively</description>
+    <matlab>doc</matlab>
+    <Octave>help -i  % browse with Info</Octave>
+    <scilab>help</scilab>
+    <R>help.start()</R>
+    <Python package="IPython">help()</Python>
+    <gnuplot><alt>help</alt><alt>?</alt></gnuplot>
+    <IDL>?</IDL>
+    <axiom>)hd</axiom>
+  </command>
+
+  <command>
+    <description>Help on using help</description>
+    <matlab><alt>help help</alt><alt>doc doc</alt></matlab>
+    <R>help()</R>
+    <!--<R>help(help)</R>-->
+    <Python>help</Python>
+    <IDL>?help</IDL>
+    <axiom>)help ?</axiom>
+  </command>
+
+  <command>
+    <description>Help for a function</description>
+    <matlab>help plot</matlab>
+    <R>
+      <alt>help(plot)</alt>
+      <alt>?plot</alt>
+    </R>
+    <Python>
+      <alt>help(plot)</alt>
+      <alt package="IPython">?plot</alt>
+    </Python>
+    <gnuplot>
+      <alt>help plot</alt>
+      <alt>?plot</alt>
+    </gnuplot>
+    <IDL>
+      <alt>?plot</alt>
+      <alt>man,'plot</alt>
+    </IDL>
+    <maxima>describe(keyword)$</maxima>
+    <maple>?keyword</maple>
+    <mathematica>?keyword</mathematica>
+    <mupad>?keyword</mupad>
+  </command>
+
+  <command>
+    <description>Help for a toolbox/library package</description>
+    <matlab>
+      <alt>help splines</alt>
+      <alt>doc splines</alt>
+    </matlab>
+    <R>help(package='splines')</R>
+    <Python>help(pylab)</Python>
+  </command>
+
+  <command>
+    <description>Demonstration examples</description>
+    <matlab>demo</matlab>
+    <scilab>demoplay();</scilab>
+    <R>demo()</R>
+    <IDL>demo</IDL>
+    <!--<maxima>demo("demofile.dem");</maxima>-->
+  </command>
+
+  <command>
+    <description>Example using a function</description>
+    <R>example(plot)</R>
+    <maxima>example(factor);</maxima>
+  </command>
+
+  </group>
+  <section>
+    <title>Searching available documentation</title>
+    <group>
+    
+    <command>
+      <description>Search help files</description>
+      <matlab>lookfor plot</matlab>
+      <R>help.search('plot')</R>
+    </command>
+
+    <command>
+      <description>Find objects by partial name</description>
+      <R>apropos('plot')</R>
+      <scilab>apropos plot</scilab>
+      <axiom>)what operations pattern</axiom>
+      <maxima>describe(pattern)$
+         <!--apropos("pattern");--></maxima>
+      <maple>?keyword</maple>
+      <mathematica>?*pattern*</mathematica>
+      <mupad>?*pattern*</mupad>
+    </command>
+
+    <command>
+      <description>List available packages</description>
+      <matlab>help</matlab>
+      <R>library()</R>
+      <Python>help(); modules [Numeric]</Python>
+      <!--<Python package="sys">print sys.path</Python>-->
+    </command>
+
+    <command>
+      <description>Locate functions</description>
+      <matlab>which plot</matlab>
+      <scilab>whereis plot</scilab>
+      <R>find(plot)</R>
+      <Python>help(plot)</Python>
+    </command>
+
+    <command>
+      <description>List available methods for a function</description>
+      <R>methods(plot)</R>
+      <!-- R: help (plot)  _and_   methods(plot) -->
+      <!--<Python package="IPython">??plot</Python>-->
+    </command>
+    </group>
+  </section>
+
+  <section>
+    <title>Using interactively</title>
+
+    <group>
+    <command>
+      <description>Start session</description>
+      <Octave>octave -q</Octave>
+      <R>Rgui</R>
+      <Python package="IPython">ipython -pylab</Python>
+      <IDL>idlde</IDL>
+      <bc>bc -lq</bc>
+      <gnuplot>pgnuplot</gnuplot>
+    </command>
+
+    <command>
+      <description>Auto completion</description>
+      <Octave><alt>TAB</alt><alt>M-?</alt></Octave>
+      <scilab>! // commands in history</scilab>
+      <Python package="IPython">TAB</Python>
+    </command>
+
+<!--
+    <command>
+      <description>Command recall</description>
+      <generic>Up-Arrow</generic>
+      <Octave>Up-arrow</Octave>
+      <Python package="IPython">TAB</Python>
+    </command>
+-->
+
+    <command>
+      <description>Run code from file</description>
+      <matlab>foo(.m)</matlab>
+      <scilab>exec('foo.sce')</scilab>
+      <R>source('foo.R')</R>
+      <Python>
+	<alt>execfile('foo.py')</alt>
+        <alt package="IPython">run foo.py</alt>
+      </Python>
+      <gnuplot>load 'foo.gp'</gnuplot>
+      <IDL>
+	<alt>@"foo.idlbatch"</alt>
+	<alt>.run 'foo.pro'</alt>
+      </IDL>
+      <maxima>batch("foo.mc")</maxima>
+    </command>
+
+    <!--
+    <command>
+      <description>Run code in file from command line</description>
+      <Octave>octave -q foo.m</Octave>
+      <R>Rcmd BATCH foo.R</R>
+      <gnuplot>pgnuplot.exe -persist foo.gp</gnuplot>
+      <bc>bc -q foo.bc > output.txt</bc>
+    </command>
+    -->
+
+    <command>
+      <description>Command history</description>
+      <Octave>history</Octave>
+      <scilab>gethistory</scilab>
+      <R>history()</R>
+      <Python package="IPython">hist -n</Python>
+      <IDL>help,/rec</IDL>
+      <axiom>)history )show</axiom>
+    </command>
+
+    <command>
+      <description>Save command history</description>
+      <matlab>diary on [..] diary off</matlab>
+      <scilab>diary('session.txt') [..] diary(0)</scilab>
+      <R>savehistory(file=".Rhistory")</R>
+      <IDL>journal,'IDLhistory'</IDL>
+      <axiom>)hist )write foo.input</axiom>
+    </command>
+
+    <command>
+      <description>End session</description>
+      <matlab>
+        <alt>exit</alt>
+        <alt>quit</alt>
+      </matlab>
+      <R>q(save='no')</R>
+      <Python>
+	<alt>CTRL-D</alt>
+	<alt>CTRL-Z # windows</alt>
+	<alt package="sys">sys.exit()</alt>
+      </Python>
+      <gnuplot>
+        <alt>exit</alt>
+        <alt>quit</alt>
+      </gnuplot>
+      <IDL>
+	<alt>exit</alt>
+	<alt>CTRL-D</alt>
+      </IDL>
+      <axiom>)quit</axiom>
+      <maxima>quit();</maxima>
+      <maple>quit</maple>
+      <mathematica>Quit[]</mathematica>
+      <mupad>quit</mupad>
+      <derive>[Quit]</derive>
+      <reduce>quit;</reduce>
+      <bc>quit</bc>
+    </command>
+    </group>
+  </section>
+</section>
+
+
+<section>
+  <title>Operators</title>
+
+  <group>
+
+    <command>
+      <description>Help on operator syntax</description>
+      <matlab>help -</matlab>
+      <scilab>help symbols</scilab>
+      <R>help(Syntax)</R>
+    </command>
+
+  </group>
+  <section>
+    <title>Arithmetic operators</title>
+
+    <group>
+    <command>
+      <description>Assignment; defining a number</description>
+      <matlab>a=1; b=2;</matlab>
+      <R><![CDATA[a<-1; b<-2]]></R>
+      <Python>a=1; b=1</Python>
+      <IDL><![CDATA[a=1 & b=1]]></IDL>
+      <bc>a=1; b=1</bc>
+    </command>
+
+    <command>
+      <description>Addition</description>
+      <generic>a + b</generic>
+      <matlab>a + b</matlab>
+      <R>
+        <alt>a + b</alt>
+	<!--<alt form="functional">add(a,b)</alt>-->
+      </R>
+      <Python>
+	<alt>a + b</alt>
+	<alt form="functional">add(a,b)</alt>
+      </Python>
+      <gnuplot>a + b</gnuplot>
+      <IDL>a + b</IDL>
+      <bc>a + b</bc>
+    </command>
+
+    <command>
+      <description>Subtraction</description>
+      <generic>a - b</generic>
+      <matlab>a - b</matlab>
+      <R>a - b
+	<!--<alt form="functional">subtract(a,b)</alt>-->
+      </R>
+      <Python>
+        <alt>a - b</alt>
+	<alt form="functional">subtract(a,b)</alt>
+      </Python>
+      <gnuplot>a - b</gnuplot>
+      <IDL>a - b</IDL>
+      <bc>a - b</bc>
+    </command>
+
+    <command>
+      <description>Multiplication</description>
+      <generic>a * b</generic>
+      <matlab>a * b</matlab>
+      <R>
+        <alt>a * b</alt>
+	<!--<alt form="functional">multiply(a,b)</alt>-->
+      </R>
+      <Python>
+        <alt>a * b</alt>
+	<alt form="functional">multiply(a,b)</alt>
+      </Python>
+      <gnuplot>a * b</gnuplot>
+      <IDL>a * b</IDL>
+      <bc>a * b</bc>
+    </command>
+
+    <command>
+      <description>Division</description>
+      <generic>a / b</generic>
+      <matlab>a / b</matlab>
+      <R>
+        <alt>a / b</alt>
+	<!--<alt form="functional">divide(a,b)</alt>-->
+      </R>
+      <Python>
+        <alt>a / b</alt>
+	<alt form="functional">divide(a,b)</alt>
+      </Python>
+      <gnuplot>a / b</gnuplot>
+      <IDL>a / b</IDL>
+    </command>
+
+    <command>
+      <description>Power, $a^b$</description>
+      <matlab>a .^ b</matlab>
+      <R>a ^ b</R>
+      <Python>
+	<alt>a ** b</alt>
+	<alt package="NumPy" form="functional">power(a,b)</alt>
+	<alt package="math" form="functional">pow(a,b)</alt>
+      </Python>
+      <gnuplot>a ** b</gnuplot>
+      <IDL>a ^ b</IDL>
+      <axiom>a**b</axiom>
+      <maxima><alt>a^b</alt><alt>a**b</alt></maxima>
+      <!--<googlecalc>a^b</googlecalc>-->
+      <bc>a ^ b</bc>
+    </command>
+
+    <command>
+      <description>Remainder</description>
+      <matlab>rem(a,b)</matlab>
+      <scilab>modulo(a,b)</scilab>
+      <R>
+        <alt>a %% b</alt>
+	<!--<alt form="functional">remainder(a,b)</alt>-->
+      </R>
+      <Python>
+	<alt>a % b</alt>
+	<alt package="NumPy" form="functional">remainder(a,b)</alt>
+	<alt package="math" form="functional">fmod(a,b)</alt>
+      </Python>
+      <gnuplot>a % b</gnuplot>
+      <IDL>a MOD b</IDL>
+      <axiom>rem(a,b)</axiom>
+      <maxima>mod(a,b)</maxima>
+      <maple>a mod b</maple>
+      <mathematica>Mod[a,b]</mathematica>
+      <mupad>a mod b</mupad>
+      <derive>MOD(a,b)</derive>
+      <bc>a % b</bc>
+    </command>
+
+    <command>
+      <description>Integer division</description>
+      <R>a %/% b</R>
+      <bc>a / b</bc>
+      <!--<Python>divmod(a,b)[0]</Python>-->
+    </command>
+
+    <command>
+      <description>Increment, return new value</description>
+      <Octave>++a</Octave>
+      <IDL><alt>++a</alt><alt>a+=1</alt></IDL>
+      <bc>++a</bc>
+    </command>
+    <command>
+      <description>Increment, return old value</description>
+      <Octave>a++</Octave>
+      <IDL>a++</IDL>
+      <bc>a++</bc>
+    </command>
+    <!-- Decrement is analogous -->
+
+    <command>
+      <description>In place operation
+           to save array creation overhead</description>
+      <Python>
+	<alt>a+=b</alt>
+        <alt>add(a,b,a)</alt>
+      </Python>
+      <Octave>a+=1</Octave>
+      <IDL>a+=1</IDL>
+      <bc>a+=b</bc>
+    </command>
+
+    <command>
+      <description>Factorial, $n!$</description>
+      <matlab>factorial(a)</matlab>
+      <R>factorial(a)</R>
+      <axiom>factorial(a)</axiom>
+      <maxima>a!</maxima>
+      <maple>a!</maple>
+      <!--<googlecalc>a!</googlecalc>-->
+    </command>
+
+    <!--
+    <command>
+      <description>Find common denominator</
+      
+    -->
+    </group>
+  </section>
+
+  <section>
+    <title>Relational operators</title>
+
+    <group>
+    <command>
+      <description>Equal</description>
+      <generic>a == b</generic>
+      <matlab>a == b</matlab>
+      <R>a == b</R>
+      <Python>
+	<alt>a == b</alt>
+	<alt>equal(a,b)</alt>
+      </Python>
+      <IDL>a eq b</IDL>
+      <bc>a == b</bc>
+    </command>
+
+    <command>
+      <description>Less than</description>
+      <generic><![CDATA[a < b]]></generic>
+      <matlab><![CDATA[a < b]]></matlab>
+      <R><![CDATA[a < b]]></R>
+      <Python>
+        <alt><![CDATA[a < b]]></alt>
+	<alt>less(a,b)</alt>
+      </Python>
+      <IDL>a lt b</IDL>
+      <bc><![CDATA[a < b]]></bc>
+    </command>
+
+    <command>
+      <description>Greater than</description>
+      <generic>a > b</generic>
+      <matlab>a > b</matlab>
+      <R>a > b</R>
+      <Python>
+        <alt>a > b</alt>
+	<alt>greater(a,b)</alt>
+      </Python>
+      <IDL>a gt b</IDL>
+      <bc>a > b</bc>
+    </command>
+
+    <command>
+      <description>Less than or equal</description>
+      <generic><![CDATA[a <= b]]></generic>
+      <matlab><![CDATA[a <= b]]></matlab>
+      <R><![CDATA[a <= b]]></R>
+      <Python>
+	<alt><![CDATA[a <= b]]></alt>
+	<alt>less_equal(a,b)</alt>
+      </Python>
+      <IDL>a le b</IDL>
+      <bc><![CDATA[a <= b]]></bc>
+    </command>
+
+    <command>
+      <description>Greater than or equal</description>
+      <generic>a >= b</generic>
+      <matlab>a >= b</matlab>
+      <R>a >= b</R>
+      <Python>
+	<alt>a >= b</alt>
+	<alt>greater_equal(a,b)</alt>
+      </Python>
+      <IDL>a ge b</IDL>
+      <bc>a >= b</bc>
+    </command>
+
+    <command>
+      <description>Not Equal</description>
+      <matlab>a ~= b</matlab>
+      <scilab>
+        <alt>a ~= b</alt>
+        <alt><![CDATA[a <> b]]></alt>
+      </scilab>
+      <R>a != b</R>
+      <Python>
+	<alt>a != b</alt>
+	<alt>not_equal(a,b)</alt>
+      </Python>
+      <IDL>a ne b</IDL>
+      <bc>a != b</bc>
+    </command>
+
+    </group>
+  </section>
+
+  <section>
+    <title>Logical operators</title>
+
+    <group>
+      <command>
+      <description>Short-circuit logical AND</description>
+      <matlab><![CDATA[a && b]]></matlab>
+      <Python>a and b</Python>
+      <R><![CDATA[a && b]]></R>
+      <bc><![CDATA[a && b]]></bc>
+    </command>
+    <command>
+      <description>Short-circuit logical OR</description>
+      <matlab>a || b</matlab>
+      <Python>a or b</Python>
+      <R>a || b</R>
+      <bc>a || b</bc>
+    </command>
+
+    <command>
+      <description>Element-wise logical AND</description>
+      <matlab>
+        <alt><![CDATA[a & b]]></alt>
+	<alt>and(a,b)</alt>
+      </matlab>
+      <R><![CDATA[a & b]]></R>
+      <Python>
+        <alt>logical_and(a,b)</alt><!-- element-wise operation -->
+	<alt>a and b</alt>
+      </Python>
+      <IDL>a and b</IDL>
+    </command>
+
+    <command>
+      <description>Element-wise logical OR</description>
+      <matlab>
+        <alt>a | b</alt>
+	<alt>or(a,b)</alt>
+      </matlab>
+      <R>a | b</R>
+      <Python>
+        <alt>logical_or(a,b)</alt>
+	<alt>a or b</alt>
+      </Python>
+      <IDL>a or b</IDL>
+    </command>
+
+    <command>
+      <description>Logical EXCLUSIVE OR</description>
+      <matlab>xor(a, b)</matlab>
+      <R>xor(a, b)</R>
+      <Python>logical_xor(a,b)</Python>
+      <IDL>a xor b</IDL>
+    </command>
+
+    <command>
+      <description>Logical NOT</description>
+      <matlab>
+        <alt>~a</alt>
+	<alt>not(a)</alt>
+      </matlab>
+      <Octave>
+        <alt>~a</alt>
+        <alt>!a</alt>
+      </Octave>
+      <R>!a</R>
+      <Python>
+        <alt>logical_not(a)</alt>
+	<alt>not a</alt>
+      </Python>
+      <IDL>not a</IDL>
+      <bc>!a</bc>
+    </command>
+
+    <command>
+      <description>True if any element is nonzero</description>
+      <matlab>any(a)</matlab>
+    </command>
+    <command>
+      <description>True if all elements are nonzero</description>
+      <matlab>all(a)</matlab>
+      <scilab>and(a)</scilab>
+    </command>
+
+    <!--
+    <command>
+      <description>True if all variable exists</description>
+      <matlab>exist(a)</matlab>
+    </command>
+
+	<R>isTRUE(a)</R>
+	<R>identical(TRUE,x)</R>
+    -->
+
+    </group>
+  </section>
+
+<!--
+  <section>
+    <title>Bitwise operators</title>
+
+    <command>
+      <description>Complement bits</description>
+      <matlab>bitcmp(a,n)</matlab>
+    </command>
+
+    <command>
+      <description>Bit-wise AND</description>
+      <matlab>bitand(a,b)</matlab>
+      <Python>
+	<cmd>bitwise_and(a,b)</cmd>
+	<cmd><![CDATA[a & b]]></cmd>
+      </Python>
+      <IDL>a and b</IDL>
+    </command>
+
+    <command>
+      <description>Bit-wise OR</description>
+      <matlab>bitor(a,b)</matlab>
+      <Python>
+	<cmd>bitwise_or(a,b)</cmd>
+	<cmd>a | b</cmd>
+      </Python>
+      <IDL>a or b</IDL>
+    </command>
+
+    <command>
+      <description>Bit-wise XOR</description>
+      <matlab>bitxor(a,b)</matlab>
+      <Python>
+	<cmd>bitwise_xor(a,b)</cmd>
+	<cmd>a ^ b</cmd>
+      </Python>
+      <IDL>a xor b</IDL>
+    </command>
+
+    <command>
+      <description>Bit-wise NOT</description>
+      <Python>
+        invert()
+        <cmd>bitwise_not(a,b)</cmd>
+	<cmd>~a</cmd>
+      </Python>
+      <IDL>not a</IDL>
+    </command>
+
+    <command>
+      <description>Maximum floating point integer</description>
+      <matlab>bitmax(a,b)</matlab>
+    </command>
+
+    <command>
+      <description>Get bit</description>
+      <matlab>bitget(a, bitpos)</matlab>
+    </command>
+
+    <command>
+      <description>Set bit</description>
+      <matlab>bitset(a, bitpos, 0)</matlab>
+    </command>
+
+    <command>
+      <description>Bit-wise shift</description>
+      <matlab>bitshift(a, shifts)</matlab>
+      <Python>
+        <cmd>right_shift(a, shifts)</cmd>
+        <cmd>left_shift(a, shifts)</cmd>
+	<cmd><![CDATA[a<<1]]></cmd>
+	<cmd>a>>1</cmd>
+      </Python>
+      <IDL>ishift(a, shifts)</IDL>
+    </command>
+  </section>
+-->
+
+
+  <section>
+    <title>root and logarithm</title>
+
+    <group>
+    <command>
+      <description>Square root</description>
+      <generic>sqrt(a)</generic>
+      <matlab>sqrt(a)</matlab>
+      <R>sqrt(a)</R>
+      <Python package="math">math.sqrt(a)</Python>
+      <gnuplot>sqrt(a)</gnuplot>
+      <IDL>sqrt(a)</IDL>
+      <axiom>sqrt(a)</axiom>
+      <maxima>sqrt(a)</maxima>
+      <maple>sqrt(a)</maple>
+      <mathematica>Sqrt[a]</mathematica>
+      <bc>sqrt(a)</bc>
+      <latex>\sqrt{a}</latex>
+    </command>
+
+    <command>
+      <description>Logarithm, base $e$ (natural)</description>
+      <generic>log(a)</generic>
+      <matlab>log(a)</matlab>
+      <R>log(a)</R>
+      <Python package="math">math.log(a)</Python>
+      <gnuplot>log(a)</gnuplot>
+      <IDL>alog(a)</IDL>
+      <axiom>log(a)</axiom>
+      <maxima>log(a)</maxima>
+      <maple>log(a)</maple>
+      <mathematica>Log[a]</mathematica>
+      <mupad>ln(a)</mupad>
+      <bc>l(a)</bc>
+      <latex>\ln a = \log_e a</latex>
+    </command>
+
+    <command>
+      <description>Logarithm, base 10</description>
+      <generic>log10(a)</generic>
+      <matlab>log10(a)</matlab>
+      <R>log10(a)</R>
+      <Python package="math">math.log10(a)</Python>
+      <gnuplot>log10(a)</gnuplot>
+      <IDL>alog10(a)</IDL>
+      <latex>\log_{10} a </latex>
+    </command>
+
+    <command>
+      <description>Logarithm, base 2 (binary)</description>
+      <matlab>log2(a)</matlab>
+      <R>log2(a)</R>
+      <Python package="math">math.log(a, 2)</Python>
+      <latex>\log_2 a </latex>
+    </command>
+
+    <command>
+      <description>Exponential function</description>
+      <generic>exp(a)</generic>
+      <matlab>exp(a)</matlab>
+      <R>exp(a)</R>
+      <Python package="math">math.exp(a)</Python>
+      <gnuplot>exp(a)</gnuplot>
+      <IDL>exp(a)</IDL>
+      <bc>e(a)</bc>
+      <latex>e^a</latex>
+    </command>
+    </group>
+</section>
+
+  <section>
+    <title>Round off</title>
+
+<group>
+    <command>
+      <description>Round</description>
+      <matlab>round(a)</matlab>
+      <R>round(a)</R>
+      <Python>
+        <alt package="NumPy">around(a)</alt>
+        <alt package="math">math.round(a)</alt>
+      </Python>
+      <IDL>round(a)</IDL>
+    </command>
+
+    <command>
+      <description>Round up</description>
+      <matlab>ceil(a)</matlab>
+      <R>ceil(a)</R>
+      <Python package="NumPy,math">ceil(a)</Python>
+      <gnuplot>ceil(a)</gnuplot>
+      <IDL>ceil(a)</IDL>
+    </command>
+
+    <command>
+      <description>Round down</description>
+      <matlab>floor(a)</matlab>
+      <R>floor(a)</R>
+      <Python package="NumPy,math">floor(a)</Python>
+      <gnuplot>floor(a)</gnuplot>
+      <IDL>floor(a)</IDL>
+    </command>
+
+    <command>
+      <description>Round towards zero</description>
+      <matlab>fix(a)</matlab>
+      <Python package="NumPy">fix(a)</Python>
+    </command>
+
+</group>
+  </section>
+
+  <section>
+    <title>Mathematical constants</title>
+
+    <group>
+    <command>
+      <description>$\pi=3.141592$</description>
+      <matlab>pi</matlab>
+      <scilab>%pi</scilab>
+      <R>pi</R>
+      <Python package="math">math.pi</Python>
+      <IDL>!pi</IDL>
+      <axiom>%pi</axiom>
+      <maxima>%pi</maxima>
+      <maple>Pi</maple>
+      <mathematica>Pi</mathematica>
+      <mupad>PI</mupad>
+    </command>
+
+    <command>
+      <description>$e=2.718281$</description>
+      <matlab>exp(1)</matlab>
+      <scilab>%e</scilab>
+      <R>exp(1)</R>
+      <Python package="math">
+        <alt>math.e</alt>
+	<alt>math.exp(1)</alt>
+      </Python>
+      <gnuplot>exp(1)</gnuplot>
+      <IDL>exp(1)</IDL>
+      <axiom>%e</axiom>
+      <maxima>%e</maxima>
+      <maple>exp(1)</maple>
+      <mathematica>E</mathematica>
+      <mupad>E</mupad>
+    </command>
+
+<!--
+    <command>
+      <description>The Golden Ratio, $\phi=1.618034$</description>
+      <matlab>phi = (1 + sqrt(5))/2</matlab>
+      <R><![CDATA[phi <- (1 + sqrt(5))/2]]></R>
+      <Python package="math">phi = (1 + sqrt(5))/2</Python>
+      <latex>\fraq{1}{\phi} = \phi - 1</latex>
+    </command>
+-->
+    </group>
+    <section>
+      <title>Missing values; IEEE-754 floating point status flags</title>
+      <group>
+      <command>
+        <description>Not a Number</description>
+        <matlab>NaN</matlab>
+        <Python package="numarray.ieeespecial">nan</Python>
+        <scilab>%nan</scilab>
+      </command>
+
+      <command>
+        <description>Infinity, $\infty$</description>
+        <matlab>Inf</matlab>
+        <scilab>%inf</scilab>
+        <Python package="numarray.ieeespecial">inf</Python>
+      </command>
+
+      <command>
+        <description>Infinity, $+\infty$</description>
+        <Python package="numarray.ieeespecial">plus_inf</Python>
+        <axiom>%plusInfinity</axiom>
+        <!--<latex>+\infty</latex>-->
+      </command>
+
+      <command>
+        <description>Infinity, $-\infty$</description>
+        <Python package="numarray.ieeespecial">minus_inf</Python>
+        <axiom>%minusInfinity</axiom>
+      </command>
+
+      <command>
+        <description>Plus zero, $+0$</description>
+        <Python package="numarray.ieeespecial">plus_zero</Python>
+      </command>
+
+      <command>
+        <description>Minus zero, $-0$</description>
+        <Python package="numarray.ieeespecial">minus_zero</Python>
+      </command>
+
+      </group>
+    </section>
+
+  </section>
+
+  <section>
+    <title>Complex numbers</title>
+
+    <!-- get these from help(Mod) -->
+    <group>
+      <command>
+      <description>Imaginary unit</description>
+      <matlab>i</matlab>
+      <scilab>%i</scilab>
+      <R>1i</R><!-- R treats "i" as a variable name -->
+      <Python package="cmath,numpy">z = 1j</Python>
+      <gnuplot>{0,1}</gnuplot>
+      <IDL>complex(0,1)</IDL>
+      <axiom>%i</axiom>
+      <maxima>%i</maxima>
+      <latex>i = \sqrt{-1}</latex><!-- i^2 = -1 -->
+    </command>
+
+    <command>
+      <description>A complex number, $3+4i$</description>
+      <matlab>z = 3+4i</matlab>
+      <scilab>z = 3+4*%i</scilab>
+      <R><![CDATA[z <- 3+4i]]></R>
+      <Python>
+        <alt>z = 3+4j</alt>
+        <alt>z = complex(3,4)</alt>
+      </Python>
+      <gnuplot>{3,4}</gnuplot>
+      <IDL>z = complex(3,4)</IDL>
+      <axiom>3+4*%i</axiom>
+      <maxima>3+4*%i</maxima>
+    </command>
+
+    <command>
+      <description>Absolute value (modulus)</description>
+      <generic>abs(z)</generic>
+      <matlab>abs(z)</matlab>
+      <R><alt>abs(3+4i)</alt><alt>Mod(3+4i)</alt></R>
+      <Python package="cmath">abs(3+4j)</Python>
+      <gnuplot>abs({3,4})</gnuplot>
+      <IDL>abs(z)</IDL>
+      <maxima>abs(z);</maxima>
+    </command>
+
+    <command>
+      <description>Real part</description>
+      <generic>real(z)</generic>
+      <matlab>real(z)</matlab>
+      <R>Re(3+4i)</R>
+      <Python>z.real</Python>
+      <gnuplot>real({3,4})</gnuplot>
+      <IDL>real_part(z)</IDL>
+      <maxima>realpart(z)</maxima>
+    </command>
+
+    <command>
+      <description>Imaginary part</description>
+      <generic>imag(z)</generic>
+      <matlab>imag(z)</matlab>
+      <R>Im(3+4i)</R>
+      <Python>z.imag</Python>
+      <IDL>imaginary(z)</IDL>
+      <gnuplot>imag({3,4})</gnuplot>
+      <maxima>imagpart(z)</maxima>
+    </command>
+
+    <command>
+      <description>Argument</description>
+      <matlab>arg(z)</matlab>
+      <R>Arg(3+4i)</R>
+      <gnuplot>arg({3,4})</gnuplot>
+    </command>
+
+    <command>
+      <description>Complex conjugate</description>
+      <generic>conj(z)</generic>
+      <matlab>conj(z)</matlab>
+      <R>Conj(3+4i)</R>
+      <Python>z.conj(); z.conjugate()</Python>
+      <IDL>conj(z)</IDL>
+    </command>
+
+    </group>
+  </section>
+
+  <section>
+    <title>Trigonometry</title>
+
+    <group>
+      <command>
+      <description>Sine</description>
+      <generic>sin(a)</generic>
+    </command>
+    <command>
+      <description>Cosine</description>
+      <generic>cos(a)</generic>
+    </command>
+    <command>
+      <description>Tangent</description>
+      <generic>tan(a)</generic>
+    </command>
+    <!--
+    <command>
+      <description>Cotangent</description>
+      <generic>cotg(a)</generic>
+      <latex>\cos(x)/\sin(x)</latex>
+    </command>
+    -->
+
+    <command>
+      <description>Arcsine</description>
+      <generic><alt>asin(a)</alt><alt>arcsin(a)</alt></generic>
+    </command>
+    <command>
+      <description>Arccosine</description>
+      <generic><alt>acos(a)</alt><alt>arccos(a)</alt></generic>
+    </command>
+    <command>
+      <description>Arctangent</description>
+      <generic><alt>atan(a)</alt><alt>arctan(a)</alt></generic>
+    </command>
+    <command>
+      <description>Arctangent, $\arctan(b/a)$</description>
+      <matlab>atan(a,b)</matlab>
+      <R>atan2(b,a)</R>
+      <Python package="math">atan2(b,a)</Python>
+      <!-- arctan2(a,b) -->
+    </command>
+
+    <command>
+      <description>Hyperbolic sine</description>
+      <generic>sinh(a)</generic>
+    </command>
+    <command>
+      <description>Hyperbolic cosine</description>
+      <generic>cosh(a)</generic>
+    </command>
+    <command>
+      <description>Hyperbolic tangent</description>
+      <generic>tanh(a)</generic>
+    </command>
+
+    <command>
+      <description>Hypotenus; Euclidean distance</description>
+      <Python>hypot(x,y)</Python>
+      <latex>\sqrt{x^2+y^2}</latex>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Generate random numbers</title>
+
+    <group>
+      <command>
+      <description>Uniform distribution</description>
+      <matlab>rand(1,10)</matlab>
+      <scilab>rand(1,10,'uniform')</scilab>
+      <R>runif(10)</R>
+      <Python package="NumPy.random">
+        <alt package="NumPy.random">random.random((10,))</alt>
+        <alt package="NumPy.random">random.uniform((10,))</alt>
+        <alt package="Numeric.RandomArray">random((10,))</alt>
+	<alt package="Numeric.RandomArray">uniform(0,1,(10,))</alt>
+      </Python>
+      <IDL>randomu(seed, 10)</IDL>
+    </command>
+
+    <command>
+      <description>Uniform: Numbers between 2 and 7</description>
+      <matlab>2+5*rand(1,10)</matlab>
+      <scilab>2+5*rand(1,10,'uniform')</scilab>
+      <R>runif(10, min=2, max=7)</R>
+      <Python>
+        <alt package="NumPy">random.uniform(2,7,(10,))</alt>
+        <alt package="Numeric.RandomArray">uniform(2,7,(10,))</alt>
+      </Python>
+      <IDL>2+5*randomu(seed, 10)</IDL>
+    </command>
+
+    <command>
+      <description>Uniform: 6,6 array</description>
+      <matlab>rand(6)</matlab>
+      <scilab>rand(6,6,'uniform')</scilab>
+      <R>matrix(runif(36),6)</R>
+      <Python>
+        <alt package="NumPy">random.uniform(0,1,(6,6))</alt>
+        <alt package="Numeric.RandomArray">uniform(0,1,(6,6))</alt>
+      </Python>
+      <IDL>randomu(seed,[6,6])</IDL>
+    </command>
+
+    <command>
+      <description>Normal distribution</description>
+      <matlab>randn(1,10)</matlab>
+      <scilab>rand(1,10,'normal')</scilab>
+      <R>rnorm(10)</R>
+      <Python>
+        <alt package="NumPy">random.standard_normal((10,))</alt>
+        <alt package="Numeric.RandomArray">standard_normal((10,))</alt>
+	<!--<cmd>normal(0,1,(10,))</cmd>-->
+      </Python>
+      <IDL>randomn(seed, 10)</IDL>
+    </command>
+
+    <!--
+	2+5*randn(10,1)
+	rnorm(10,2,5)
+	rand(6)
+	matrix(rnorm(36),6)
+	RandomArray.standard_normal((6,6))
+    -->
+
+    <!--
+    <command>
+      <description>Beta distribution</description>
+      <matlab>beta_rnd(4,2,10,1)</matlab>
+      <R>hist(rbeta(10,shape1=4,shape2=10))</R>
+      <Python>
+         <alt package="Numeric.RandomArray"
+	      >beta(4,2,(10,))</Python>
+    </command>
+    -->
+
+    </group>
+  </section>
+
+</section>
+
+
+<section>
+  <title>Vectors</title>
+
+  <group>
+    <command>
+    <description>Row vector, $1 \times n$-matrix</description>
+    <matlab>a=[2 3 4 5];</matlab>
+    <R><![CDATA[a <- c(2,3,4,5)]]></R>
+    <Python package="NumPy">a=array([2,3,4,5])</Python>
+      <!--<alt package="NumPy">r_[1:10]</alt>-->
+    <IDL>a = [2, 3, 4, 5]</IDL>
+  </command>
+
+  <command>
+    <description>Column vector, $m \times 1$-matrix</description>
+    <matlab>adash=[2 3 4 5]';</matlab>
+    <R><![CDATA[adash <- t(c(2,3,4,5))]]></R>
+    <Python>
+      <alt package="NumPy">array([2,3,4,5])[:,NewAxis]</alt>
+      <alt package="NumPy">array([2,3,4,5]).reshape(-1,1)</alt>
+      <alt package="NumPy">r_[1:10,'c']</alt>
+      <alt package="Numeric">transpose(array([2,3,4,5]))</alt>
+    </Python>
+    <IDL>transpose([2,3,4,5])</IDL>
+    <!--
+	rotate(b,1)
+	1#b
+	b##1
+    -->
+  </command>
+
+  </group><section>
+    <title>Sequences</title>
+
+    <group>
+      <command>
+      <description>1,2,3, ... ,10</description>
+      <matlab>1:10</matlab>
+      <R>
+        <alt>seq(10)</alt>
+	<alt>1:10</alt>
+      </R>
+      <Python>
+	<alt package="NumPy">arange(1,11, dtype=Float)</alt>
+	<alt package="Numeric">arange(1,11, typecode=Float)</alt>
+	<alt>range(1,11)</alt>
+      </Python>
+      <IDL>
+	<cmd>indgen(10)+1</cmd>
+	<cmd>dindgen(10)+1</cmd>
+      </IDL>
+    </command>
+
+    <command>
+      <description>0.0,1.0,2.0, ... ,9.0</description>
+      <matlab>0:9</matlab>
+      <R>seq(0,length=10)</R>
+      <Python package="NumPy">arange(10.)</Python>
+      <IDL>dindgen(10)</IDL>
+    </command>
+
+    <command>
+      <description>1,4,7,10</description>
+      <matlab>1:3:10</matlab>
+      <R>seq(1,10,by=3)</R>
+      <Python package="NumPy">arange(1,11,3)</Python>
+      <IDL>indgen(4)*3+1</IDL>
+    </command>
+
+    <command>
+      <description>10,9,8, ... ,1</description>
+      <matlab>10:-1:1</matlab>
+      <R>
+        <alt>seq(10,1)</alt>
+	<alt>10:1</alt>
+      </R>
+      <Python package="NumPy">arange(10,0,-1)</Python>
+    </command>
+
+    <command>
+      <description>10,7,4,1</description>
+      <matlab>10:-3:1</matlab>
+      <R>seq(from=10,to=1,by=-3)</R>
+      <Python package="NumPy">arange(10,0,-3)</Python>
+    </command>
+
+    <command>
+      <description>Linearly spaced vector of n=7 points</description>
+      <matlab>linspace(1,10,7)</matlab>
+      <R>seq(1,10,length=7)</R>
+      <Python package="NumPy">linspace(1,10,7)</Python>
+    </command>
+
+    <!--
+	<command>
+	<description>1,2,3, ... ,10 imaginary numbers</description>
+	<matlab>(1:10)+i</matlab>
+	<R>1:10+1i</R>
+	<IDL>cindgen(10)+1</IDL>
+	</command>
+    -->
+
+    <command>
+      <description>Reverse</description>
+      <matlab>reverse(a)</matlab>
+      <scilab>a($:-1:1)</scilab>
+      <R>rev(a)</R>
+      <Python>
+	<alt package="NumPy">a[::-1]</alt>
+	<alt package="Numeric">a[::-1]; a.reverse()</alt>
+      </Python>
+      <IDL>reverse(a)</IDL>
+    </command>
+
+    <command>
+      <description>Set all values to same scalar value</description>
+      <matlab>a(:) = 3</matlab>
+      <Python package="NumPy">a.fill(3), a[:] = 3</Python>
+    </command>
+
+    </group>
+  </section>
+
+  <section>
+    <title>Concatenation (vectors)</title>
+
+    <group>
+      <command>
+      <description>Concatenate two vectors</description>
+      <matlab>[a a]</matlab>
+      <R>c(a,a)</R>
+      <Python package="NumPy">concatenate((a,a))</Python>
+      <!--<Python package="NumPy">hstack((r_[1:5],r_[1:5]))</Python>-->
+      <IDL>
+        <alt>[a,a]</alt>
+        <alt>rebin(a,2,size(a))</alt>
+      </IDL>
+    </command>
+
+<!--
+    <command>
+      <description></description>
+      <IDL>rebin(a,2,size(a))</IDL>
+    </command>
+-->
+
+<!--
+    <command>
+      <matlab>[a a*3]</matlab>
+      <R>c(a,a*3)</R>
+      <Python package="NumPy">concatenate((a,a*3), axis=1)</Python>
+      <IDL>[a,a*3]</IDL>
+    </command>
+-->
+
+    <command>
+      <matlab>[1:4 a]</matlab>
+      <R>c(1:4,a)</R>
+      <Python package="NumPy">concatenate((range(1,5),a), axis=1)</Python>
+      <IDL>[indgen(3)+1,a]</IDL>
+    </command>
+
+    </group>
+  </section>
+
+  <section>
+    <title>Repeating</title>
+
+    <!--
+    <command>
+      <description>Create a vector</description>
+      <Python package="NumPy">a=arange(1,4)</Python>
+      <R>a=1:3</R>
+      <matlab>a=1:3</matlab>
+    </command>
+    -->
+
+    <group>
+      <command>
+      <description>1 2 3, 1 2 3</description>
+      <matlab>[a a]</matlab>
+      <R>rep(a,times=2)</R>
+      <Python package="NumPy">concatenate((a,a))</Python>
+      <!--<IDL>replicate()</IDL>-->
+    </command>
+
+    <command>
+      <description>1 1 1, 2 2 2, 3 3 3</description>
+      <R>rep(a,each=3)</R>
+      <Python>
+        <alt package="NumPy">a.repeat(3)</alt>
+        <alt package="Numeric">repeat(a,3)</alt>
+      </Python>
+    </command>
+
+    <command>
+      <description>1, 2 2, 3 3 3</description>
+      <R>rep(a,a)</R>
+      <Python>
+        <alt package="NumPy">a.repeat(a)</alt>
+        <alt package="Numeric">repeat(a,a)</alt>
+      </Python>
+    </command>
+
+    </group>
+</section>
+
+  <section>
+    <title>Miss those elements out</title>
+
+    <!--
+    <command>
+      <matlab>a=1:100;</matlab>
+      <R><![CDATA[a <- 1:100]]></R>
+      <Python>a=range(1,101)</Python>
+    </command>
+    -->
+
+    <group>
+      <command>
+      <description>miss the first element</description>
+      <matlab>a(2:end)</matlab>
+      <scilab>a(2:$)</scilab>
+      <R>a[-1]</R>
+      <Python>a[1:]</Python>
+    </command>
+
+    <command>
+      <description>miss the tenth element</description>
+      <matlab>a([1:9])</matlab>
+      <R>a[-10]</R>
+    </command>
+
+    <command>
+      <description>miss 1,4,7, ...</description>
+      <R>a[-seq(1,50,3)]</R>
+    </command>
+
+    <command>
+      <description>last element</description>
+      <matlab>a(end)</matlab>
+      <scilab>a($)</scilab>
+      <Python>a[-1]</Python>
+    </command>
+
+    <command>
+      <description>last two elements</description>
+      <matlab>a(end-1:end)</matlab>
+      <Python>a[-2:]</Python>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Maximum and minimum</title>
+
+    <group>
+<command>
+      <description>pairwise max</description>
+      <matlab>max(a,b)</matlab>
+      <Python package="NumPy">maximum(a,b)</Python>
+      <R>pmax(a,b)</R>
+    </command>
+
+    <command>
+      <description>max of all values in two vectors</description>
+      <matlab>max([a b])</matlab>
+      <Python package="NumPy">concatenate((a,b)).max()</Python>
+      <R>max(a,b)</R>
+    </command>
+
+    <command>
+      <matlab>[v,i] = max(a)</matlab>
+      <Python package="NumPy">v,i = a.max(0),a.argmax(0)</Python>
+      <R><![CDATA[v <- max(a) ; i <- which.max(a)]]></R>
+    </command>
+
+    <!-- "min" is analogous in R and octave. -->
+
+    </group></section>
+
+  <section>
+    <title>Vector multiplication</title>
+
+    <group>
+<command>
+      <description>Multiply two vectors</description>
+      <matlab>a.*a</matlab>
+      <R>a*a</R>
+      <Python package="NumPy">a*a</Python>
+    </command>
+
+    <command>
+      <description>Vector cross product, $u \times v$</description>
+      <IDL>crossp(u,v)</IDL>
+      <mathematica>cross(u,v)</mathematica>
+    </command>
+
+    <command>
+      <description>Vector dot product, $u \cdot v$</description>
+      <matlab>dot(u,v)</matlab>
+      <Python>dot(u,v)</Python>
+    </command>
+
+    <!--
+      dot product, $u \cdot v$
+      cross product, $u \times v$, $u \wedge v$
+      perp dot product, $u^\perp \cdot v$
+      vector direct product, $u v$
+      scalar product
+      inner product
+      outer product
+    -->
+
+    </group></section>
+
+<!--
+  <section>
+    <title>Ranks</title>
+
+    <command>
+      <matlab>ranks(rnorm(randn(5,6)))</matlab>
+      <R>apply(matrix(rnorm(30),6),2,rank)</R>
+    </command>
+
+  </section>
+-->
+
+</section>
+
+<section>
+  <title>Matrices</title>
+
+<group>
+<command>
+    <description>Define a matrix</description>
+    <matlab>a = [2 3;4 5]</matlab>
+    <R>
+      <alt>rbind(c(2,3),c(4,5))</alt>
+      <alt>array(c(2,3,4,5), dim=c(2,2))</alt>
+    </R>
+    <Python>a = array([[2,3],[4,5]])</Python>
+    <IDL>a = [[2,3],[4,5]]</IDL>
+    <axiom>a := matrix [[2,3],[4,5]]</axiom>
+    <maxima>matrix([2,3],[4,5])</maxima>
+    <maple>matrix([[2,3],[4,5]])</maple>
+    <mathematica>{{2,3},{4,5}}</mathematica>
+    <derive>[[2,3],[4,5]]</derive>
+    <latex><![CDATA[
+      \left[
+      \begin{array}{cccc}
+      2 & 3 \\
+      4 & 5
+      \end{array}
+      \right]]]>
+    </latex>
+  </command>
+
+  <!--
+      <command>
+      [2 3;4 5]'
+      cbind(c(2,3),c(4,5))
+      </command>
+  -->
+
+  <!--
+      a=[5 6];
+      a <- c(5,6)
+      b=[a a;a a];
+      b <- rbind(c(a,a),c(a,a))
+      [1:3 1:3 1:3 ; 1:9]
+      [1:3 1:3 1:3 ; 1:9]'
+      rbind(1:3, 1:9)
+      cbind(1:3, 1:9)
+      rbind(1:3, 1:8)
+  -->
+
+</group>
+
+<section>
+    <title>Concatenation (matrices); rbind and cbind</title>
+
+<group>
+    <command>
+      <description>Bind rows</description>
+      <matlab>[a ; b]</matlab>
+      <R>rbind(a,b)</R>
+      <Python package="NumPy">
+        <alt>concatenate((a,b), axis=0)</alt>
+        <alt>vstack((a,b))</alt>
+      </Python>
+    </command>
+
+    <command>
+      <description>Bind columns</description>
+      <matlab>[a , b]</matlab>
+      <R>cbind(a,b)</R>
+      <Python package="NumPy">
+        <alt>concatenate((a,b), axis=1)</alt>
+        <alt>hstack((a,b))</alt><!-- column_stack((a,b)) -->
+      </Python>
+    </command>
+
+    <command>
+      <description>Bind slices (three-way arrays)</description>
+      <Python package="NumPy">
+        <alt>concatenate((a,b), axis=2)</alt>
+        <alt>dstack((a,b))</alt>
+      </Python>
+    </command>
+
+    <command>
+      <description>Concatenate matrices into one vector</description>
+      <matlab>[a(:), b(:)]</matlab>
+      <Python>concatenate((a,b), axis=None)</Python>
+    </command>
+
+    <command>
+      <description>Bind rows (from vectors)</description>
+      <matlab>[1:4 ; 1:4]</matlab>
+      <R>rbind(1:4,1:4)</R>
+      <Python>
+        <alt package="NumPy">concatenate((r_[1:5],r_[1:5])).reshape(2,-1)</alt>
+        <alt package="NumPy">vstack((r_[1:5],r_[1:5]))</alt>
+      </Python>
+      <output from="R">
+        <cmd>     [,1] [,2] [,3] [,4]</cmd>
+        <cmd>[1,]    1    2    3    4</cmd>
+        <cmd>[2,]    1    2    3    4</cmd>
+      </output>
+    </command>
+
+    <command>
+      <description>Bind columns (from vectors)</description>
+      <matlab>[1:4 ; 1:4]'</matlab>
+      <!--
+      <Python package="NumPy"
+          >concatenate((r_[1:5],r_[1:5])).reshape(2,-1).transpose()</Python>
+      -->
+      <R>cbind(1:4,1:4)</R><!-- t(rbind(1:4,1:4)) -->
+      <output from="R">
+        <cmd>     [,1] [,2]</cmd>
+        <cmd>[1,]    1    1</cmd>
+        <cmd>[2,]    2    2</cmd>
+        <cmd>[3,]    3    3</cmd>
+        <cmd>[4,]    4    4</cmd>
+      </output>
+    </command>
+
+</group></section>
+
+  <section>
+    <title>Array creation</title>
+
+    <group>
+<command>
+      <description>0 filled array</description>
+      <matlab>zeros(3,5)</matlab>
+      <R>
+	<alt>matrix(0,3,5)</alt>
+	<alt>array(0,c(3,5))</alt>
+      </R>
+      <Python package="NumPy">zeros((3,5),Float)</Python>
+      <IDL>dblarr(3,5)</IDL>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{ccccc}
+	0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>0 filled array of integers</description>
+      <Python package="NumPy">zeros((3,5))</Python>
+      <IDL>intarr(3,5)</IDL>
+    </command>
+
+    <command>
+      <description>1 filled array</description>
+      <matlab>ones(3,5)</matlab>
+      <R>
+        <alt>matrix(1,3,5)</alt>
+	<alt>array(1,c(3,5))</alt>
+      </R>
+      <Python package="NumPy">ones((3,5),Float)</Python>
+      <IDL>dblarr(3,5)+1</IDL>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{ccccc}
+	1 & 1 & 1 & 1 & 1 \\
+	1 & 1 & 1 & 1 & 1 \\
+	1 & 1 & 1 & 1 & 1
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Any number filled array</description>
+      <matlab>ones(3,5)*9</matlab>
+      <R>
+        <alt>matrix(9,3,5)</alt>
+	<alt>array(9,c(3,5))</alt>
+      </R>
+      <Python>
+        <!--<alt package="NumPy">a.fill(9)</alt>-->
+        <alt package="Numeric">ones((3,5))*9</alt>
+      </Python>
+      <IDL>intarr(3,5)+9</IDL>
+      <latex><![CDATA[\left[
+      \begin{array}{ccccc}
+	9 & 9 & 9 & 9 & 9 \\
+	9 & 9 & 9 & 9 & 9 \\
+	9 & 9 & 9 & 9 & 9
+	\end{array}
+	\right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Identity matrix</description>
+      <matlab>eye(3)</matlab>
+      <scilab>eye(3,3)</scilab>
+      <R>diag(1,3)</R>
+      <Python package="NumPy">identity(3)</Python>
+      <IDL>identity(3)</IDL>
+      <latex><![CDATA[\left[\begin{array}{ccc}
+	1 & 0 & 0 \\
+	0 & 1 & 0 \\
+	0 & 0 & 1
+	\end{array}\right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Diagonal</description>
+      <matlab>diag([4 5 6])</matlab>
+      <R>diag(c(4,5,6))</R>
+      <Python package="NumPy">diag((4,5,6))</Python>
+      <IDL>diag_matrix([4,5,6])</IDL>
+      <axiom>diagonalMatrix([4,5,6])</axiom>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{ccc}
+	4 & 0 & 0 \\
+	0 & 5 & 0 \\
+	0 & 0 & 6
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+      <!--
+    <command>
+      <description>Diagonal</description>
+      <matlab>diag(1:10,3)</matlab>
+      <R>
+	I don't think there is a drop-in
+	replacement but it's easy to
+	write a little function:
+
+di <- function(vec,n=0) {
+  l <- length(vec)
+  if (n >=0) {
+    return (cbind(matrix(0,l+n,n),diag(vec,l+n,l)))
+  } else {
+    return (t(di(vec, -n)))
+  }
+}
+then di(1:10,3) works as per Octave.
+</R>
+    </command>
+      -->
+
+    <command>
+      <description>Magic squares; Lo Shu</description>
+      <matlab>magic(3)</matlab>
+      <scilab>testmatrix('magi',3)</scilab>
+      <latex><![CDATA[\left[\begin{array}{ccc}
+	8 & 1 & 6 \\
+	3 & 5 & 7 \\
+	4 & 9 & 2 \\
+	\end{array}\right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Empty array</description>
+      <Python package="NumPy">a = empty((3,3))</Python>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Reshape and flatten matrices</title>
+
+    <group>
+<command>
+      <description>Reshaping (rows first)</description>
+      <matlab>reshape(1:6,3,2)';</matlab>
+      <scilab>matrix(1:6,3,2)';</scilab>
+      <R>matrix(1:6,nrow=3,byrow=T)</R>
+      <Python>
+        <alt package="NumPy">arange(1,7).reshape(2,-1)</alt>
+	<alt package="Numeric">a.shape = (2,3)</alt>
+	<alt package="numarray">a.setshape(2,3)</alt>
+      </Python>
+      <IDL>reform(a,2,3)</IDL>
+      <latex><![CDATA[\left[\begin{array}{ccc}
+	1 & 2 & 3 \\
+	4 & 5 & 6 \\
+	\end{array}\right]]]>
+      </latex>
+      <!-- difference: python fills rows first, matlab/r cols -->
+    </command>
+
+    <command>
+      <description>Reshaping (columns first)</description>
+      <matlab>reshape(1:6,2,3);</matlab>
+      <scilab>matrix(1:6,2,3);</scilab>
+      <R>
+        <alt>matrix(1:6,nrow=2)</alt>
+	<alt>array(1:6,c(2,3))</alt>
+      </R>
+      <Python package="NumPy">arange(1,7).reshape(-1,2).transpose()</Python>
+      <latex><![CDATA[\left[\begin{array}{ccc}
+	1 & 3 & 5 \\
+	2 & 4 & 6 \\
+	\end{array}\right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Flatten to vector (by rows, like comics)</description>
+      <matlab>a'(:)</matlab>
+      <R>as.vector(t(a))</R>
+      <Python>
+        <alt package="NumPy">a.flatten()</alt><!-- a.ravel() -->
+	<alt package="Numeric">ravel(a)</alt>
+      </Python>
+      <latex><![CDATA[\left[\begin{array}{cccccc}
+	1 & 2 & 3 & 4 & 5 & 6
+	\end{array}\right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Flatten to vector (by columns)</description>
+      <matlab>a(:)</matlab>
+      <R>as.vector(a)</R>
+      <Python>
+        <alt package="NumPy">a.flatten(1)</alt><!-- a.ravel(1) -->
+        <alt package="Numeric">ravel(transpose(a))</alt>
+      </Python>
+      <latex><![CDATA[\left[\begin{array}{cccccc}
+	1 & 4 & 2 & 5 & 3 & 6
+	\end{array}\right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Flatten upper triangle (by columns)</description>
+      <matlab>vech(a)</matlab>
+      <R><![CDATA[a[row(a) <= col(a)]]]></R>
+<!--
+    TODO
+      <latex><![CDATA[\left[\begin{array}{cccccc}
+	1 & 2 & 3 & 4 & 5 & 6
+	\end{array}\right]]]>
+      </latex>
+-->
+    </command>
+
+    </group>
+</section>
+
+  <section>
+    <title>Shared data (slicing)</title>
+
+    <group>
+<command>
+      <description>Copy of a</description>
+      <matlab>b = a</matlab>
+      <R>b = a</R>
+      <Python>b = a.copy()</Python>
+    </command>
+
+    <!--
+	<command>
+	<description></description>
+	<matlab>
+	b = a
+	b[1] = 30
+	Result: a = [ 2 3 4 5 ]
+	</matlab>
+	<Python>
+	b = a
+	b[0] = 30
+	Result: a = [ 30 3 4 5 ]
+	</Python>
+	</command>
+    -->
+    </group></section>
+
+  <section>
+    <title>Indexing and accessing elements (Python: slicing)</title>
+
+    <!--
+	<command>
+	<description>Reshaping</description>
+	<matlab>a=reshape(1:12,3,4);</matlab>
+	<R><![CDATA[a <- matrix(1:12,nrow=3)]]></R>
+	<Python package="NumPy">a = arange(1,13).reshape(3,4)</Python>
+	</command>
+    -->
+
+    <group><command>
+      <description>Input is a 3,4 array</description>
+      <matlab>
+	<cmd>a = [ 11 12 13 14 ...</cmd>
+	<cmd>      21 22 23 24 ...</cmd>
+	<cmd>      31 32 33 34 ]</cmd>
+      </matlab>
+      <R>
+	<cmd><![CDATA[a <- rbind(c(11, 12, 13, 14),]]></cmd>
+	<cmd>           c(21, 22, 23, 24),</cmd>
+	<cmd>           c(31, 32, 33, 34))</cmd>
+      </R>
+      <Python>
+	<cmd>a = array([[ 11, 12, 13, 14 ],</cmd>
+        <cmd>           [ 21, 22, 23, 24 ],</cmd>
+        <cmd>           [ 31, 32, 33, 34 ]])</cmd>
+      </Python>
+      <IDL>
+	<cmd>a = [[ 11, 12, 13, 14 ], $</cmd>
+        <cmd>     [ 21, 22, 23, 24 ], $</cmd>
+        <cmd>     [ 31, 32, 33, 34 ]]</cmd>
+      </IDL>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{11} & a_{12} & a_{13} & a_{14} \\
+	a_{21} & a_{22} & a_{23} & a_{24} \\
+	a_{31} & a_{32} & a_{33} & a_{34}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Element 2,3 (row,col)</description>
+      <matlab>a(2,3)</matlab>
+      <R>a[2,3]</R>
+      <Python>a[1,2]</Python>
+      <IDL>a(2,1)</IDL><!-- order of indices is opposite -->
+      <latex>
+	a_{23}
+      </latex>
+    </command>
+
+    <command>
+      <description>First row</description>
+      <matlab>a(1,:)</matlab>
+      <R>a[1,]</R>
+      <Python>a[0,]</Python>
+      <IDL>a(*,0)</IDL>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{11} & a_{12} & a_{13} & a_{14}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>First column</description>
+      <matlab>a(:,1)</matlab>
+      <R>a[,1]</R>
+      <Python>a[:,0]</Python>
+      <IDL>a(0,*)</IDL>
+      <latex>
+	\left[
+	\begin{array}{cccc}
+	a_{11} \\
+	a_{21} \\
+	a_{31}
+	\end{array}
+	\right]
+      </latex>
+    </command>
+
+    <command>
+      <description>Array as indices</description>
+      <matlab>a([1 3],[1 4]);</matlab>
+      <Python>
+        <alt package="NumPy">a.take([0,2]).take([0,3], axis=1)</alt>
+        <alt package="Numeric">take(take(a,[0,2]),[0,3], axis=1)</alt>
+      </Python>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cc}
+	a_{11} & a_{14} \\
+	a_{31} & a_{34}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>All, except first row</description>
+      <matlab>a(2:end,:)</matlab>
+      <scilab>a(2:$,:)</scilab>
+      <R>a[-1,]</R>
+      <Python>a[1:,]</Python>
+      <IDL>a(*,1:*)</IDL>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{21} & a_{22} & a_{23} & a_{24} \\
+	a_{31} & a_{32} & a_{33} & a_{34}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Last two rows</description>
+      <matlab>a(end-1:end,:)</matlab>
+      <Python>a[-2:,]</Python>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{21} & a_{22} & a_{23} & a_{24} \\
+	a_{31} & a_{32} & a_{33} & a_{34}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Strides: Every other row</description>
+      <matlab>a(1:2:end,:)</matlab>
+      <Python>a[::2,:]</Python>
+      <!--<IDL>a(*:*:2,1:*:2)</IDL>-->
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{11} & a_{12} & a_{13} & a_{14} \\
+	a_{31} & a_{32} & a_{33} & a_{34}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Third in last dimension (axis)</description>
+      <Python>a[...,2]</Python>
+      <!--
+      <latex>
+	\left[
+	\begin{array}{cccc}
+	a_{13} \\
+	a_{23} \\
+	a_{33}
+	\end{array}
+	\right]
+      </latex>
+      -->
+    </command>
+
+    <command>
+      <description>All, except row,column (2,3)</description>
+      <R>a[-2,-3]</R><!-- Negative indices still work in pairs -->
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{11} & a_{13} & a_{14} \\
+	a_{31} & a_{33} & a_{34}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Remove one column</description>
+      <matlab>a(:,[1 3 4])</matlab>
+      <R>a[,-2]</R><!-- negative indices mean leave them out -->
+      <Python>
+        <alt package="NumPy">a.take([0,2,3],axis=1)</alt>
+        <alt package="Numeric">take(a,[0,2,3],axis=1)</alt>
+      </Python>
+      <!--
+	  # del data[70]
+	  # data.pop([70])
+      -->
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{11} & a_{13} & a_{14} \\
+	a_{21} & a_{23} & a_{24} \\
+	a_{31} & a_{33} & a_{34}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Diagonal</description>
+      <Python package="NumPy">a.diagonal(offset=0)</Python>
+      <latex><![CDATA[
+	\left[
+	\begin{array}{cccc}
+	a_{11} & a_{22} & a_{33} & a_{44}
+	\end{array}
+	\right]
+      ]]></latex>
+    </command>
+
+    </group>
+  </section>
+
+  <section>
+    <title>Assignment</title>
+
+    <group>
+      <command>
+      <matlab>a(:,1) = 99</matlab>
+      <R><![CDATA[a[,1] <- 99]]></R>
+      <Python>a[:,0] = 99</Python>
+    </command>
+
+    <command>
+      <matlab>a(:,1) = [99 98 97]'</matlab>
+      <R><![CDATA[a[,1] <- c(99,98,97)]]></R>
+      <Python>a[:,0] = array([99,98,97])</Python>
+    </command>
+
+    <command>
+      <description>Clipping: Replace all elements over 90</description>
+      <matlab>a(a>90) = 90;</matlab>
+      <R><![CDATA[a[a>90] <- 90]]></R>
+      <Python>
+        <alt package="NumPy">(a>90).choose(a,90)</alt>
+        <alt package="NumPy">a.clip(min=None, max=90)</alt>
+        <alt package="Numeric">choose(a>90, (a,90))</alt>
+      </Python>
+      <IDL>a>90</IDL>
+    </command>
+
+    <command>
+      <description>Clip upper and lower values</description>
+      <Python>
+        <alt package="NumPy">a.clip(min=2, max=5)</alt>
+        <alt package="Numeric">clip(a,2,5)</alt>
+      </Python>
+      <IDL><![CDATA[a < 2 > 5]]></IDL>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Transpose and inverse</title>
+
+    <group><command>
+      <description>Transpose</description>
+      <matlab>a'</matlab>
+      <R>t(a)</R>
+      <Python>
+        <alt package="NumPy">a.conj().transpose()</alt>
+        <alt package="Numeric">transpose(a)</alt>
+      </Python>
+      <IDL>transpose(a)</IDL>
+      <maxima>transpose(a);</maxima>
+    </command>
+
+    <command>
+      <description>Non-conjugate transpose</description>
+      <matlab>
+        <alt>a.'</alt>
+        <alt>transpose(a)</alt>
+      </matlab>
+      <Python package="NumPy">a.transpose()</Python>
+    </command>
+
+    <command>
+      <description>Determinant</description>
+      <matlab>det(a)</matlab>
+      <R>det(a)</R>
+      <Python>
+        <alt package="NumPy.linalg">linalg.det(a)</alt>
+        <alt package="Numeric.LinearAlgebra">determinant(a)</alt>
+      </Python>
+      <IDL>determ(a)</IDL>
+      <axiom>determinant a</axiom>
+      <maxima>determinant(a);</maxima>
+    </command>
+
+    <command>
+      <description>Inverse</description>
+      <matlab>inv(a)</matlab>
+      <R>solve(a)</R>
+      <Python>
+        <alt package="NumPy.linalg">linalg.inv(a)</alt>
+        <alt package="Numeric.LinearAlgebra">inverse(a)</alt>
+      </Python>
+      <IDL>invert(a)</IDL>
+      <axiom>inverse a</axiom>
+      <maxima>invert(a),detout;</maxima>
+    </command>
+
+    <command>
+      <description>Pseudo-inverse</description>
+      <matlab>pinv(a)</matlab>
+      <R package="mass">ginv(a)</R>
+      <Python package="NumPy.linalg">linalg.pinv(a)</Python>
+    </command>
+
+    <command>
+      <description>Norms</description>
+      <matlab>norm(a)</matlab>
+      <Python package="matplotlib.mlab">norm(a)</Python>
+    </command>
+
+    <command>
+      <description>Eigenvalues</description>
+      <matlab>eig(a)</matlab>
+      <scilab>spec(a)</scilab>
+      <R>eigen(a)$values</R>
+      <Python>
+        <alt package="NumPy.linalg">linalg.eig(a)[0]</alt>
+        <alt package="Numeric.LinearAlgebra">eigenvalues(a)</alt>
+      </Python>
+      <IDL>hqr(elmhes(a))</IDL>
+      <mathematica>Eigenvalues[matrix]</mathematica>
+      <axiom>eigenvalues a</axiom>
+    </command>
+
+    <command>
+      <description>Singular values</description>
+      <matlab>svd(a)</matlab>
+      <R>svd(a)$d</R>
+      <Python>
+        <alt package="NumPy.linalg">linalg.svd(a)</alt>
+        <alt package="Numeric.LinearAlgebra"
+	      >singular_value_decomposition(a)</alt>
+      </Python>
+      <IDL>svdc,A,w,U,V</IDL>
+      <mathematica>SingularValueDecomposition[m]</mathematica>
+    </command>
+
+    <command>
+      <description>Cholesky factorization</description>
+      <matlab>chol(a)</matlab>
+      <Python package="NumPy.linalg">linalg.cholesky(a)</Python>
+    </command>
+
+    <!--
+    <command>
+      <description>LU Decomposition
+      <mathematica>LUDecomposition[m]</mathematica>
+    -->
+
+    <command>
+      <description>Eigenvectors</description>
+      <matlab>[v,l] = eig(a)</matlab>
+      <scilab>[v,l] = spec(a)</scilab>
+      <R>eigen(a)$vectors</R>
+      <Python>
+        <alt package="NumPy.linalg">linalg.eig(a)[1]</alt>
+        <alt package="Numeric.LinearAlgebra">eigenvectors(a)</alt>
+      </Python>
+      <axiom>eigenvectors a</axiom>
+    </command>
+
+    <command>
+      <description>Rank</description>
+      <matlab>rank(a)</matlab>
+      <R>rank(a)</R>
+      <Python package="NumPy">rank(a)</Python>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Sum</title>
+
+    <group><command>
+      <description>Sum of each column</description>
+      <matlab>sum(a)</matlab>
+      <scilab>sum(a,'c')</scilab>
+      <R>apply(a,2,sum)</R>
+      <Python package="NumPy">a.sum(axis=0)</Python>
+          <!--add.reduce(a [,axis=0])-->
+      <IDL>total(a,2)</IDL>
+    </command>
+
+    <command>
+      <description>Sum of each row</description>
+      <matlab>sum(a')</matlab>
+      <scilab>sum(a,'r')</scilab>
+      <R>apply(a,1,sum)</R>
+      <Python package="NumPy">a.sum(axis=1)</Python>
+      <IDL>total(a,1)</IDL>
+    </command>
+
+    <command>
+      <description>Sum of all elements</description>
+      <matlab>sum(sum(a))</matlab>
+      <scilab>sum(a)</scilab>
+      <R>sum(a)</R>
+      <Python package="NumPy">a.sum()</Python>
+      <IDL>
+	<alt>total(a)</alt>
+	<!--<alt>total(reform(a,n_elements(a),1))</alt>-->
+      </IDL>
+    </command>
+
+    <command>
+      <description>Sum along diagonal</description>
+      <Python package="NumPy">a.trace(offset=0)</Python>
+    </command>
+
+    <command>
+      <description>Cumulative sum (columns)</description>
+      <matlab>cumsum(a)</matlab>
+      <R>apply(a,2,cumsum)</R>
+      <Python package="NumPy">a.cumsum(axis=0)</Python>
+    </command>
+
+    <!--
+	cumsum(a')
+	apply(a,1,cumsum)
+	Numeric.add.accumulate(a, axis=1)
+    -->
+
+    </group></section>
+  <section>
+    <title>Sorting</title>
+
+    <group><command>
+      <description>Example data</description>
+      <matlab>a = [ 4 3 2 ; 2 8 6 ; 1 4 7 ]</matlab>
+      <Python>a = array([[4,3,2],[2,8,6],[1,4,7]])</Python>
+      <latex><![CDATA[
+        \left[
+        \begin{array}{ccc}
+        4 & 3 & 2 \\
+        2 & 8 & 6 \\
+        1 & 4 & 7
+        \end{array}
+        \right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Flat and sorted</description>
+      <matlab>sort(a(:))</matlab>
+      <scilab>s=sort(a(:)); s($:-1:1)</scilab>
+      <R>t(sort(a))</R>
+      <Python>
+        <alt package="NumPy">a.ravel().sort()</alt>
+        <alt package="Numeric">sort(a.flat)</alt>
+      </Python>
+      <latex><![CDATA[
+        \left[
+        \begin{array}{ccc}
+        1 & 2 & 2 \\
+        3 & 4 & 4 \\
+        6 & 7 & 8
+        \end{array}
+        \right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Sort each column</description>
+      <matlab>sort(a)</matlab>
+      <scilab>s=sort(a,'r'); s($:-1:1,:)</scilab><!-- reverse -->
+      <R>apply(a,2,sort)</R>
+      <Python>
+	<alt package="NumPy">a.sort(axis=0)</alt>
+	<alt package="NumPy,MLab">msort(a)</alt>
+      </Python>
+      <IDL>sort(a)</IDL>
+      <latex><![CDATA[
+        \left[
+        \begin{array}{ccc}
+        1 & 3 & 2 \\
+        2 & 4 & 6 \\
+        4 & 8 & 7
+        \end{array}
+        \right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Sort each row</description>
+      <matlab>sort(a')'</matlab>
+      <scilab>s=sort(a,'c'); s(:,$:-1:1)</scilab>
+      <R>t(apply(a,1,sort))</R>
+      <Python>
+	<alt package="NumPy">a.sort(axis=1)</alt>
+      </Python>
+      <latex><![CDATA[
+        \left[
+        \begin{array}{ccc}
+        2 & 3 & 4 \\
+        2 & 6 & 8 \\
+        1 & 4 & 7
+        \end{array}
+        \right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Sort rows (by first row)</description>
+      <matlab>sortrows(a,1)</matlab>
+      <Python package="NumPy">a[a[:,0].argsort(),]</Python>
+      <latex><![CDATA[
+        \left[
+        \begin{array}{ccc}
+        1 & 4 & 7 \\
+        2 & 8 & 6 \\
+        4 & 3 & 2
+        \end{array}
+        \right]]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Sort, return indices</description>
+      <R>order(a)</R>
+      <Python package="NumPy">a.ravel().argsort()</Python>
+    </command>
+
+    <command>
+      <description>Sort each column, return indices</description>
+      <Python package="NumPy">a.argsort(axis=0)</Python>
+    </command>
+
+    <command>
+      <description>Sort each row, return indices</description>
+      <Python package="NumPy">a.argsort(axis=1)</Python>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Maximum and minimum</title>
+
+    <!--
+	<matlab>a=randn(100,4)</matlab>
+	<R><![CDATA[a <- matrix(rnorm(400),4)]]></R>
+    -->
+
+    <group><command>
+      <description>max in each column</description>
+      <matlab>max(a)</matlab>
+      <scilab>max(a,'c')</scilab>
+      <R>apply(a,2,max)</R>
+      <Python>
+        <alt package="NumPy">a.max(0)</alt>
+	<alt package="matplotlib.pylab">amax(a [,axis=0])</alt>
+      </Python>
+      <IDL>max(a,DIMENSION=2)</IDL>
+    </command>
+
+    <command>
+      <description>max in each row</description>
+      <matlab>max(a')</matlab>
+      <scilab>max(a,'r')</scilab>
+      <R>apply(a,1,max)</R>
+      <Python>
+        <alt package="NumPy">a.max(1)</alt>
+	<alt package="matplotlib.pylab">amax(a, axis=1)</alt>
+      </Python>
+      <IDL>max(a,DIMENSION=1)</IDL>
+    </command>
+
+    <command>
+      <description>max in array</description>
+      <matlab>max(max(a))</matlab>
+      <scilab>max(a)</scilab>
+      <R>max(a)</R>
+      <Python>
+        <alt package="NumPy">a.max()</alt>
+        <alt package="Numeric">max(a.flat)</alt>
+      </Python>
+      <IDL>max(a)</IDL>
+    </command>
+
+    <command>
+      <description>return indices, i</description>
+      <matlab>[v i] = max(a)</matlab>
+      <scilab>[v,i] = max(a,'c')</scilab>
+      <R><![CDATA[i <- apply(a,1,which.max)]]></R>
+    </command>
+
+    <command>
+      <description>pairwise max</description>
+      <matlab>max(b,c)</matlab>
+      <Python package="NumPy">maximum(b,c)</Python>
+      <R>pmax(b,c)</R><!-- cf max(b,c) ~ max(rnorm(32)) -->
+    </command>
+
+    <command>
+      <matlab>cummax(a)</matlab>
+      <R>apply(a,2,cummax)</R>
+    </command>
+
+    <command>
+      <description>max-to-min range</description>
+      <Python package="NumPy">a.ptp(); a.ptp(0)</Python>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Matrix manipulation</title>
+
+    <group><command>
+      <description>Flip left-right</description>
+      <matlab>fliplr(a)</matlab>
+      <scilab>
+        <alt>a(:,$:-1:1)</alt>
+        <alt>mtlb_fliplr(a)</alt>
+      </scilab>
+      <R>a[,4:1]</R><!-- (improvements anyone?) -->
+      <Python>
+        <alt package="NumPy">fliplr(a)</alt>
+        <alt>a[:,::-1]</alt>
+      </Python>
+      <IDL>reverse(a)</IDL>
+    </command>
+
+    <command>
+      <description>Flip up-down</description>
+      <matlab>flipud(a)</matlab>
+      <scilab>a($:-1:1,:)</scilab>
+      <R>a[3:1,]</R>
+      <Python>
+	<alt package="NumPy">flipud(a)</alt>
+        <alt>a[::-1,]</alt>
+      </Python>
+      <IDL>reverse(a,2)</IDL>
+    </command>
+
+    <command>
+      <description>Rotate 90 degrees</description>
+      <matlab>rot90(a)</matlab>
+      <scilab>---</scilab>
+      <Python package="NumPy">rot90(a)</Python>
+      <IDL>rotate(a,1)</IDL>
+<!--
+R: no builtin but it's easy to write a little function:
+rot90 <- function(a,n=1) {
+  n <- n %% 4
+  if (n > 0) {
+    return (rot90( t(a)[nrow(a):1,],n-1) )
+  } else {
+    return (a)
+  }
+}
+-->
+    </command>
+
+<!--
+    <command>
+      <description>Meshgrid</description>
+      <matlab>[x y]=meshgrid(1:5,10:12);</matlab>
+      <Python>
+        <alt package="NumPy">mgrid(1:5,10:12)</alt>
+        <alt package="NumPy">ogrid(1:5,10:12)</alt>
+        <alt package="matplotlib">meshgrid(1:5,10:12)</alt>
+      </Python>
+<R>
+R has no builtin meshgrid() function but you can write one:
+meshgrid <- function(a,b) {
+  list(
+       x=outer(b*0,a,FUN="+"),
+       y=outer(b,a*0,FUN="+")
+       )
+}
+R> meshgrid(1:5,10:12)
+</R>
+    </command>
+
+    <command>
+      <Octave>meshgrid(1:3,1:8)' .^ meshgrid(1:8,1:3)</Octave>
+      <Octave>[x y]=meshgrid(1:8,1:3); x.^y</Octave>
+      <R>outer(1:3,1:8,"^")  _or_ t(meshgrid(1:3,1:8)$x^(1:8))</R>
+    </command>
+    -->
+
+    <command>
+      <description>Repeat matrix: [ a a a ; a a a ]</description>
+      <matlab>repmat(a,2,3)</matlab>
+      <scilab>mtlb_repmat(a,2,3)</scilab>
+      <Octave>kron(ones(2,3),a)</Octave>
+      <Python package="scipy.linalg">kron(ones((2,3)),a)</Python>
+      <R>kronecker(matrix(1,2,3),a)</R>
+    </command>
+
+    <command>
+      <description>Triangular, upper</description>
+      <matlab>triu(a)</matlab>
+      <R><![CDATA[a[lower.tri(a)] <- 0]]></R>
+      <Python package="NumPy">triu(a)</Python>
+      <mathematica package="LinearAlgebra"
+		   >UpperDiagonalMatrix[f, n]</mathematica>
+    </command>
+
+    <command>
+      <description>Triangular, lower</description>
+      <matlab>tril(a)</matlab>
+      <R><![CDATA[a[upper.tri(a)] <- 0]]></R>
+      <Python package="NumPy">tril(a)</Python>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Equivalents to "size"</title>
+
+    <group><command>
+      <description>Matrix dimensions</description>
+      <matlab>size(a)</matlab>
+      <R>dim(a)</R>
+      <Python>
+	<alt package="NumPy,Numeric">a.shape</alt>
+	<alt package="numarray">a.getshape()</alt>
+      </Python>
+      <IDL>size(a)</IDL>
+    </command>
+
+    <command>
+      <description>Number of columns</description>
+      <matlab>
+        <alt>size(a,2)</alt>
+        <alt>length(a)</alt>
+      </matlab>
+      <!--<Octave>
+        <alt>size(a,2)</alt>
+        <alt>length(a)</alt>
+        <alt>columns(a)</alt></Octave>-->
+      <R>ncol(a)</R>
+      <Python>
+	<alt package="NumPy,Numeric">a.shape[1]</alt>
+        <alt package="NumPy,Numeric">size(a, axis=1)</alt>
+      </Python>
+      <IDL><![CDATA[s=size(a) & s[1]]]></IDL>
+      <axiom>ncols(m)</axiom>
+      <maxima>mat_ncols(m)</maxima>
+      <maple>linalg[coldim](m)</maple>
+      <mathematica>Dimensions[m][[2]]</mathematica>
+      <derive>DIMENSION(m SUB 1)</derive>
+    </command>
+
+    <command>
+      <description>Number of elements</description>
+      <matlab>length(a(:))</matlab>
+      <scilab>length(a)</scilab>
+      <R>prod(dim(a))</R>
+      <Python package="NumPy">
+        <alt>a.size</alt>
+        <alt>size(a[, axis=None])</alt>
+      </Python>
+      <IDL>n_elements(a)</IDL>
+    </command>
+
+    <command>
+      <description>Number of dimensions</description>
+      <matlab>ndims(a)</matlab>
+      <Python package="NumPy">a.ndim</Python>
+    </command>
+
+    <command>
+      <description>Number of bytes used in memory</description>
+      <R>object.size(a)</R>
+      <Python package="NumPy">a.nbytes</Python>
+    </command>
+
+    </group>
+  </section>
+
+  <section>
+    <title>Matrix- and elementwise- multiplication</title>
+
+    <group>
+      <command>
+      <description>Elementwise operations</description>
+      <matlab>a .* b</matlab>
+      <R>a * b</R>
+      <Python>
+        <alt>a * b</alt>
+        <alt package="NumPy">multiply(a,b)</alt>
+      </Python>
+      <latex><![CDATA[
+	\left[\begin{array}{rr}
+	1 &  5 \\
+	9 & 16 \\
+	\end{array}\right]
+	]]>
+      </latex>
+    </command>
+    <!--
+	.*  array multiplication
+	*   matrix multiplication
+    -->
+
+    <command>
+      <description>Matrix product (dot product)</description>
+      <matlab>a * b</matlab>
+      <R>a %*% b</R>
+      <Python package="NumPy">matrixmultiply(a,b)</Python><!-- dot(a,b) -->
+      <IDL><alt>a # b</alt><alt>b ## a</alt></IDL>
+      <axiom>a*b</axiom>
+      <maxima>a.b</maxima>
+      <maple><![CDATA[evalm(a &* b)]]></maple>
+      <mathematica>a.b</mathematica>
+      <latex><![CDATA[
+	\left[\begin{array}{rr}
+	 7 & 10 \\
+	15 & 22 \\
+	\end{array}\right]
+	]]>
+      </latex>
+    </command>
+
+<!--
+    <command>
+      <description>$a^3$</description>
+      <matlab>a ^ 3</matlab>
+      <scilab>
+	<alt>a ^ 3</alt>
+	<alt>a ** 3</alt>
+      </scilab>
+    </command>
+-->
+
+    <command>
+      <description>Inner matrix vector multiplication $a\cdot b'$</description>
+      <Python>
+        <alt package="NumPy">inner(a,b)</alt>
+        <alt package="Numeric">innerproduct(a,b)</alt>
+      </Python>
+      <IDL>transpose(a) # b</IDL>
+      <latex><![CDATA[
+	\left[\begin{array}{rr}
+	 5 & 11 \\
+	11 & 25 \\
+	\end{array}\right]
+	]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Outer product</description>
+      <R>
+	<alt>outer(a,b)</alt>
+	<alt>a %o% b</alt>
+      </R>
+      <Python>
+        <alt package="NumPy">outer(a,b)</alt>
+        <alt package="Numeric">outerproduct(a,b)</alt>
+      </Python>
+      <IDL>a # b</IDL>
+      <latex><![CDATA[
+	\left[\begin{array}{rrrr}
+	1 &  2 &  3 &  4 \\
+	2 &  4 &  6 &  8 \\
+	3 &  6 &  9 & 12 \\
+	4 &  8 & 12 & 16
+	\end{array}\right]
+	]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Cross product</description>
+      <R>
+	<alt>crossprod(a,b)</alt>
+        <alt>t(a) %*% b</alt>
+      </R>
+      <latex><![CDATA[
+	\left[\begin{array}{rr}
+	10 & 14 \\
+	14 & 20 \\
+	\end{array}\right]
+	]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Kronecker product</description>
+      <matlab>kron(a,b)</matlab>
+      <scilab><alt>kron(a,b)</alt><alt>a .*. b</alt></scilab>
+      <R>kronecker(a,b)</R>
+      <Python package="scipy.linalg">kron(a,b)</Python>
+      <latex><![CDATA[
+	\left[\begin{array}{rrrr}
+	1 &  2 &  2 &  4 \\
+	3 &  4 &  6 &  8 \\
+	3 &  6 &  4 &  8 \\
+	9 & 12 & 12 & 16
+	\end{array}\right]
+	]]>
+      </latex>
+    </command>
+
+    <command>
+      <description>Matrix division, $b{\cdot}a^{-1}$</description>
+      <matlab>a / b</matlab><!-- b*inv(a) -->
+    </command>
+
+    <command>
+      <description>Left matrix division, $b^{-1}{\cdot}a$
+         \newline (solve linear equations)</description>
+      <matlab>a \ b</matlab><!-- inv(a)*b (b'/a')' -->
+      <scilab>linsolve(a,b)</scilab>
+      <R>solve(a,b)</R>
+      <Python>
+        <alt package="NumPy.linalg">linalg.solve(a,b)</alt>
+        <alt package="Numeric.LinearAlgebra"
+             >solve_linear_equations(a,b)</alt>
+      </Python>
+      <IDL>cramer(a,b)</IDL>
+      <latex>Ax=b</latex>
+    </command>
+
+    <command>
+      <description>Vector dot product</description>
+      <Python package="NumPy">vdot(a,b)</Python>
+    </command>
+
+    <command>
+      <description>Cross product</description>
+      <Python package="NumPy">cross(a,b)</Python>
+    </command>
+
+    <!--
+    <command>
+      <matlab>rem(a,5)</matlab>
+      <R>a %% 5</R>
+      <Python>remainder(a,5)</Python>
+    </command>
+
+	<command>
+	<matlab>a(rem(a,5)==1)= -999</matlab>
+	<R><![CDATA[a[a%%5==1] <- -999]]></R>
+	</command>
+
+	NB:  R treats v and w as \textit{column} vectors by default
+	(if there is a choice), eg
+	<matlab>v*c</matlab>
+	<R>v %*% c</R>
+	<matlab>c*v'</matlab>
+	<R>c %*% v</R>
+    -->
+
+    </group>
+  </section>
+
+  <section>
+    <title>Find; conditional indexing</title>
+
+    <group>
+      <command>
+      <description>Non-zero elements, indices</description>
+      <matlab>find(a)</matlab>
+      <R>which(a != 0)</R><!-- which() needs a Boolean argument -->
+      <Python>
+        <alt package="NumPy">a.ravel().nonzero()</alt>
+        <alt package="Numeric,numarray">nonzero(a.flat)</alt>
+      </Python>
+    </command>
+
+    <command>
+      <description>Non-zero elements, array indices</description>
+      <matlab>[i j] = find(a)</matlab>
+      <R>which(a != 0, arr.ind=T)</R>
+      <Python>
+        <alt package="NumPy">(i,j) = a.nonzero()</alt>
+        <alt package="NumPy">(i,j) = where(a!=0)</alt>
+        <alt package="Numeric,numarray">(i,j) = nonzero(a)</alt>
+      </Python>
+      <IDL>where(a NE 0)</IDL>
+    </command>
+
+    <command>
+      <description>Vector of non-zero values</description>
+      <matlab>[i j v] = find(a)</matlab>
+      <R><![CDATA[ij <- which(a != 0, arr.ind=T); v <- a[ij]]]></R>
+      <Python>
+        <alt package="NumPy">v = a.compress((a!=0).flat)</alt>
+        <alt package="NumPy">v = extract(a!=0,a)</alt>
+        <!--<alt package="NumPy">v = extract(a,a)</alt>-->
+        <alt package="Numeric">v = compress(a.flat!=0, a.flat)</alt>
+      </Python>
+      <IDL>a(where(a NE 0))</IDL>
+    </command>
+
+    <command>
+      <description>Condition, indices</description>
+      <matlab>find(a>5.5)</matlab>
+      <R>which(a>5.5)</R>
+      <Python>
+        <alt package="NumPy">(a>5.5).nonzero()</alt>
+        <alt package="Numeric">nonzero(a.flat>5.5)</alt>
+        <!--<alt package="Numeric">where(a>5.5,1,0)</Python>-->
+      </Python>
+      <IDL>where(a GE 5.5)</IDL>
+    </command>
+
+    <command>
+      <description>Return values</description>
+      <!--<matlab>a(find(a>5.5))</matlab>-->
+      <R><![CDATA[ij <- which(a>5.5, arr.ind=T); v <- a[ij]]]></R>
+      <Python>
+        <alt package="NumPy">a.compress((a>5.5).flat)</alt>
+        <alt package="Numeric">compress(a.flat>5.5, a.flat)</alt>
+      </Python>
+      <IDL>a(where(a GE 5.5))</IDL>
+    </command>
+
+    <command>
+      <description>Zero out elements above 5.5</description>
+      <matlab>a .* (a>5.5)</matlab>
+      <Python>
+        <alt package="NumPy">where(a>5.5,0,a)</alt>
+        <alt package="NumPy">a * (a>5.5)</alt>
+      </Python>
+    </command>
+
+    <command>
+      <description>Replace values</description>
+      <Python package="NumPy">a.put(2,indices)</Python>
+    </command>
+
+    </group>
+  </section>
+
+</section>
+
+<section>
+  <title>Multi-way arrays</title>
+
+  <group>
+    <command>
+      <description>Define a 3-way array</description>
+      <matlab>a = cat(3, [1 2; 1 2],[3 4; 3 4]);</matlab>
+      <Python package="NumPy">a = array([[[1,2],[1,2]],
+                                         [[3,4],[3,4]]])</Python>
+    </command>
+   
+    <command>
+      <matlab>a(1,:,:)</matlab>
+      <Python package="NumPy">a[0,...]</Python>
+    </command>
+  </group>
+
+<!--
+    <command>
+      <matlab>size(a(1,:,:))</matlab>
+      <Python package="NumPy">a[0,...].shape</Python>
+    </command>
+
+    <command>
+      <matlab>a(:,1,:)</matlab>
+      <Python package="NumPy">a[:,0,:]</Python>
+    </command>
+-->
+
+</section>
+
+<section>
+  <title>File input and output</title>
+
+  <group>
+    <command>
+    <description>Reading from a file (2d)</description>
+    <!--
+	localhost:~% cat foo.txt
+        4.6   3.1   1.5   0.2
+	4.6   3.4   1.4   0.3
+	5.4   3.7   1.5   0.2
+	5.8   4.0   1.2   0.2
+	5.4   3.9   1.3   0.4
+    -->
+    <matlab form="functional">f = load('data.txt')</matlab>
+    <R><![CDATA[f <- read.table("data.txt")]]></R>
+    <!--<cmd><![CDATA[x <- as.matrix(x)]]></cmd>-->
+    <Python>
+      <alt package="NumPy">f = fromfile("data.txt")</alt>
+      <alt package="matplotlib.pylab">f = load("data.txt")</alt>
+    </Python>
+    <IDL>read()</IDL>
+  </command>
+
+  <command>
+    <description>Reading from a file (2d)</description>
+    <!--
+	localhost:~% cat foo.txt
+        4.6   3.1   1.5   0.2
+	4.6   3.4   1.4   0.3
+	5.4   3.7   1.5   0.2
+	5.8   4.0   1.2   0.2
+	5.4   3.9   1.3   0.4
+    -->
+    <matlab form="functional">f = load('data.txt')</matlab>
+    <R><![CDATA[f <- read.table("data.txt")]]></R>
+    <!--<cmd><![CDATA[x <- as.matrix(x)]]></cmd>-->
+    <Python package="matplotlib.pylab">f = load("data.txt")</Python>
+    <IDL>read()</IDL>
+  </command>
+
+  <command>
+    <description>Reading fram a CSV file (2d)</description>
+    <!--
+        4.6;3.1;1.5;0.2
+	4.6;3.4;1.4;0.3
+	5.4;3.7;1.5;0.2
+	5.8;4.0;1.2;0.2
+	5.4;3.9;1.3;0.4
+    -->
+    <matlab>x = dlmread('data.csv', ';')</matlab>
+    <R><![CDATA[f <- read.table(file="data.csv", sep=";")]]></R>
+    <Python>
+      <alt package="matplotlib.pylab"
+	    >f = load('data.csv', delimiter=';')</alt>
+      <!--
+      <alt package="scipy.io"
+	    >x = read_array(fileobject, separator=None,
+                        columns=None, comment='#', lines=None, atype='d',
+                        linesep='\n', rowsize=10000, missing=0)</alt>
+      -->
+    </Python>
+    <gnuplot>set datafile separator ";"</gnuplot>
+    <IDL>x = read_ascii(data_start=1,delimiter=';')</IDL>
+  </command>
+
+  <command>
+    <description>Writing to a file (2d)</description>
+    <matlab>save -ascii data.txt f</matlab>
+    <R>write(f,file="data.txt")</R>
+    <Python>
+      <alt package="matplotlib.pylab"
+	    >save('data.csv', f, fmt='%.6f', delimiter=';')</alt>
+    </Python>
+  </command>
+
+  <command>
+    <description>Writing to a file (1d)</description>
+    <Python package="NumPy"
+	    >f.tofile(file='data.csv', format='%.6f', sep=';')</Python>
+  </command>
+
+  <command>
+    <description>Reading from a file (1d)</description>
+    <Python package="NumPy"
+            >f = fromfile(file='data.csv', sep=';')</Python>
+  </command>
+
+<!--
+  <command>
+    <description>Save session to a file</description>
+    <IDL>save,/all,file='session.sav'</IDL>
+    <axiom>)spool "session.sav"</axiom>
+  </command>
+
+  <command>
+    <description>Restore session</description>
+    <IDL>restore,'savession.sav'</IDL>
+  </command>
+-->
+
+  <!--
+      <section>
+      <title>Binary data formats</title>
+      <command>
+      <description>Reading Octave files in R</title>
+      <title>Reading MATLAB .mat files in Python</title>
+      <title>Reading MATLAB .mat files in R</title>
+      </section>
+  -->
+
+  </group>
+</section>
+
+<section>
+  <title>Plotting</title>
+
+  <section>
+    <title>Basic x-y plots</title>
+
+    <!--
+    <command>
+      <description>Display/refresh plot</description>
+      <Python package="matplotlib.pylab">show()</Python>
+    </command>
+    -->
+
+    <group>
+      <command>
+      <description>1d line plot</description>
+      <matlab>plot(a)</matlab>
+      <R>
+	<cmd>plot(a, type="l")</cmd>
+	<plot file="r/1d.pdf"/>
+      </R>
+      <Python package="matplotlib.pylab">
+	<cmd>plot(a)</cmd>
+	<plot file="python/1d.pdf"/>
+      </Python>
+      <IDL>plot, a</IDL>
+    </command>
+
+    <command>
+      <description>2d scatter plot</description>
+      <matlab>plot(x(:,1),x(:,2),'o')</matlab>
+      <R>
+        <cmd>plot(x[,1],x[,2])</cmd>
+	<plot file="r/xyplot.pdf"/>
+      </R>
+      <Python package="matplotlib.pylab">
+        <cmd>plot(x[:,0],x[:,1],'o')</cmd>
+	<plot file="python/xyplot.pdf"/>
+      </Python>
+      <IDL>plot, x(1,*), x(2,*)</IDL>
+    </command>
+
+    <!--
+    <command>
+      <description>2d scatter plot</description>
+      <Python package="matplotlib.pylab">
+        <cmd>scatter(x[:,0],x[:,1], s=, c=)</cmd>
+	<plot file="python/.png"/>
+      </Python>
+    </command>
+    -->
+
+    <command>
+      <description>Two graphs in one plot</description>
+      <matlab>plot(x1,y1, x2,y2)</matlab>
+      <Python package="matplotlib.pylab">
+	<cmd>plot(x1,y1,'bo', x2,y2,'go')</cmd>
+	<plot file="python/xyplot2.pdf"/>
+      </Python>
+    </command>
+
+    <command>
+      <description>Overplotting: Add new plots to current</description>
+      <matlab>
+        <cmd>plot(x1,y1)</cmd>
+	<cmd>hold on</cmd>
+	<cmd>plot(x2,y2)</cmd>
+      </matlab>
+      <R>
+	<cmd>plot(x1,y1)</cmd>
+	<cmd>matplot(x2,y2,add=T)</cmd>
+      </R>
+      <Python package="matplotlib.pylab">
+	<cmd>plot(x1,y1,'o')</cmd>
+	<cmd>plot(x2,y2,'o')</cmd><!-- , hold=True -->
+	<cmd>show() # as normal</cmd>
+      </Python>
+      <IDL>
+	<cmd>plot, x1, y1</cmd>
+	<cmd>oplot, x2, y2</cmd>
+      </IDL>
+    </command>
+
+    <command>
+      <description>subplots</description>
+      <matlab>subplot(211)</matlab>
+      <Python package="matplotlib.pylab">
+	<cmd>subplot(211)</cmd>
+      </Python>
+      <IDL>!p.multi(0,2,1)</IDL>
+    </command>
+
+    <command>
+      <description>Plotting symbols and color</description>
+      <matlab>plot(x,y,'ro-')</matlab>
+      <R>plot(x,y,type="b",col="red")</R>
+      <Python package="matplotlib.pylab"
+	      >plot(x,y,'ro-')</Python>
+	<!--
+        <Python package="matplotlib.pylab"
+                >plot(x,y,color='r',marker='o')</Python>
+	-->
+	<IDL>plot, x,y, line=1, psym=-1</IDL><!-- color? -->
+    </command>
+
+    </group>
+    <section>
+      <title>Axes and titles</title>
+
+    <group>
+  <command>
+	<description>Turn on grid lines</description>
+	<matlab>grid on</matlab>
+	<R>grid()</R>
+	<Python package="matplotlib.pylab">grid()</Python>
+      </command>
+
+      <command>
+	<description>1:1 aspect ratio</description>
+	<matlab>axis equal</matlab>
+	<Octave>
+	  <cmd>axis('equal')</cmd>
+	  <cmd>replot</cmd>
+	</Octave>
+	<R>plot(c(1:10,10:1), asp=1)</R>
+	<Python package="matplotlib.pylab">figure(figsize=(6,6))</Python>
+	<gnuplot>set size ratio -1</gnuplot>
+      </command>
+
+      <command>
+	<description>Set axes manually</description>
+	<matlab>axis([ 0 10 0 5 ])</matlab>
+	<scilab>plot('axis',[ 0 10 0 5 ])</scilab>
+	<R>plot(x,y, xlim=c(0,10), ylim=c(0,5))</R>
+	<gnuplot>
+	  <cmd>set xrange [0:10]</cmd>
+	  <cmd>set yrange [0:5]</cmd>
+	</gnuplot>
+	<Python package="matplotlib.pylab">axis([ 0, 10, 0, 5 ])</Python>
+	<IDL>
+	  <cmd>plot, x(1,*), x(2,*),</cmd>
+	  <cmd>   xran=[0,10], yran=[0,5]</cmd>
+	</IDL>
+      </command>
+
+<!--
+      <command>
+	<description>Banking to 45{\textdegree}</description>
+	<matlab package="dataviz">bank45()</matlab>
+	<R package="lattice">bank45()</R>
+      </command>
+-->
+
+      <command>
+	<description>Axis labels and titles</description>
+	<matlab>
+	  <cmd>title('title')</cmd>
+	  <cmd>xlabel('x-axis')</cmd>
+	  <cmd>ylabel('y-axis')</cmd>
+	</matlab>
+	<R>
+	  <cmd>plot(1:10, main="title",</cmd>
+	  <cmd>  xlab="x-axis", ylab="y-axis")</cmd>
+	</R>
+	<IDL>
+	  <cmd>plot, x,y, title='title',</cmd>
+	  <cmd>  xtitle='x-axis', ytitle='y-axis'</cmd>
+	</IDL>
+      </command>
+
+      <command>
+	<description>Insert text</description>
+	<Python package="matplotlib.pylab">text(2,25,'hello')</Python>
+	<IDL>xyouts, 2,25, 'hello'</IDL>
+      </command>
+
+      <!--
+      <command>
+	<description>Legend box</description>
+	<Python package="matplotlib.pylab">legend(loc='upper right')</Python>
+	<IDL>legend,['',''], psym=[1,2],/upper,/right</IDL>
+      </command>
+      -->
+
+    </group>
+    </section>
+
+    <section>
+      <title>Log plots</title>
+
+      <group>
+        <command>
+        <description>logarithmic y-axis</description>
+	<matlab>semilogy(a)</matlab>
+	<R>plot(x,y, log="y")</R>
+	<Python package="matplotlib.pylab">semilogy(a)</Python>
+	<IDL>
+	  <alt>plot, x,y, /YLOG</alt>
+	  <alt>plot_io, x,y</alt>
+	</IDL>
+      </command>
+
+      <command>
+        <description>logarithmic x-axis</description>
+	<matlab>semilogx(a)</matlab>
+	<R>plot(x,y, log="x")</R>
+	<Python package="matplotlib.pylab">semilogx(a)</Python>
+	<IDL>
+	  <alt>plot, x,y, /XLOG</alt>
+	  <alt>plot_oi, x,y</alt>
+	</IDL>
+      </command>
+
+      <command>
+        <description>logarithmic x and y axes</description>
+	<matlab>loglog(a)</matlab>
+	<R>plot(x,y, log="xy")</R>
+	<Python package="matplotlib.pylab">loglog(a)</Python>
+	<IDL>plot_oo, x,y</IDL>
+      </command>
+
+      </group>
+</section>
+
+    <section>
+      <title>Filled plots and bar plots</title>
+
+      <group>
+        <command>
+	<description>Filled plot</description>
+	<matlab>fill(t,s,'b', t,c,'g')</matlab>
+	<Octave>% fill has a bug?</Octave>
+	<R>
+	  <cmd>plot(t,s, type="n", xlab="", ylab="")</cmd>
+	  <cmd>polygon(t,s, col="lightblue")</cmd>
+	  <cmd>polygon(t,c, col="lightgreen")</cmd>
+	  <plot file="r/filldemo.pdf"/>
+	</R>
+	<Python package="matplotlib.pylab">
+	  <cmd>fill(t,s,'b', t,c,'g', alpha=0.2)</cmd>
+	  <plot file="python/fill.png"/>
+	</Python>
+	<gnuplot>
+	  <cmd>set xrange [0:3]</cmd>
+	  <cmd>set samples 3/.01</cmd>
+	  <cmd>plot sin(2*pi*x) with filledcurves,\</cmd>
+	  <cmd>sin(4*pi*x) with filledcurves</cmd>
+	  <plot file="gnuplot/filldemo.pdf"/>
+	</gnuplot>
+      </command>
+
+      <!--
+	  Bar graph bar()
+	  Stairs
+	  Stem plot
+      -->
+
+      <command>
+	<description>Stem-and-Leaf plot</description>
+	<R>
+	  <cmd>stem(x[,3])</cmd>
+	  <!--<plot file="r/stem-and-leaf.png"/>-->
+	</R>
+	<latex><![CDATA[\tiny\begin{array}{rl}
+	   5 & 5\\
+	   6 & 71\\
+	   7 & 033\\
+	   8 & 00113345567889\\
+	   9 & 0133566677788\\
+	  10 & 32674\\
+	  \end{array}]]>
+	</latex>
+      </command>
+
+      </group></section>
+
+    <section>
+      <title>Functions</title>
+
+      <group><command>
+	<description>Defining functions</description>
+	<matlab>f = inline('sin(x/3) - cos(x/5)')</matlab>
+	<scilab>deff('y = f(x)','y = sin(x/3) - cos(x/5)')</scilab>
+	<R><![CDATA[f <- function(x) sin(x/3) - cos(x/5)]]></R>
+	<latex>
+	  f(x) = \sin\left(\frac{x}{3}\right) - \cos\left(\frac{x}{5}\right)
+	</latex>
+      </command>
+
+      <command>
+	<description>Plot a function for given range</description>
+	<matlab>
+          <cmd>ezplot(f,[0,40])</cmd><!-- easy plot, e-zed plot -->
+          <cmd>fplot('sin(x/3) - cos(x/5)',[0,40])</cmd>
+	</matlab>
+	<Octave>% no ezplot</Octave>
+	<scilab>fplot2d([0:.5:40],f)</scilab>
+	<R>
+	  <cmd>plot(f, xlim=c(0,40), type='p')</cmd>
+	  <plot file="r/plotfunction.pdf"/>
+	</R>
+	<Python package="matplotlib.pylab">
+	  <cmd>x = arrayrange(0,40,.5)</cmd>
+	  <cmd>y = sin(x/3) - cos(x/5)</cmd>
+	  <cmd>plot(x,y, 'o')</cmd>
+	  <!--<plot file="python/plotfunction.pdf"/>-->
+	</Python>
+	<gnuplot>
+	  <cmd>set xrange [0,40]</cmd>
+	  <cmd>plot sin(x/3) - cos(x/5) with points</cmd>
+	  <plot file="gnuplot/plotfunction.pdf"/>
+	</gnuplot>
+	<axiom>draw( sin(x/3) - cos(x/5), x=0..40 )</axiom>
+      </command>
+
+      </group></section>
+
+  </section>
+
+  <section>
+    <title>Polar plots</title>
+
+    <group><command>
+      <matlab>
+	<cmd>theta = 0:.001:2*pi;</cmd>
+        <cmd>r = sin(2*theta);</cmd>
+      </matlab>
+      <!--
+      <R>
+	<cmd>theta = seq(0,2*pi,0.001)</cmd>
+        <cmd>r = sin(2*theta)</cmd>
+      </R>
+      -->
+      <Python>
+	<cmd>theta = arange(0,2*pi,0.001)</cmd>
+        <cmd>r = sin(2*theta)</cmd>
+      </Python>
+      <latex>
+        \rho(\theta) = \sin(2 \theta)
+      </latex>
+    </command>
+
+    <command>
+      <matlab>
+        <cmd>polar(theta, rho)</cmd>
+      </matlab>
+      <scilab>polarplot(theta, rho)</scilab>
+      <Python package="matplotlib.pylab">
+        <cmd>polar(theta, rho)</cmd>
+	<plot file="python/polar-pylab.pdf"/>
+      </Python>
+      <!--
+      <R package="plotrix">
+        <cmd>polar.plot(theta, rho)</cmd>
+      </R>
+      -->
+      <gnuplot>
+	<cmd>set polar</cmd>
+	<cmd>plot sin(2*t)</cmd>
+      </gnuplot>
+    </command>
+
+    </group></section>
+
+  <section>
+    <title>Histogram plots</title>
+
+    <group><command>
+      <matlab>hist(randn(1000,1))</matlab>
+      <R>hist(rnorm(1000))</R>
+      <IDL>plot, histogram(randomn(5,1000))</IDL>
+    </command>
+
+    <command>
+      <matlab>hist(randn(1000,1), -4:4)</matlab>
+      <R>hist(rnorm(1000), breaks= -4:4)</R>
+    </command>
+
+    <command>
+      <R>hist(rnorm(1000), breaks=c(seq(-5,0,0.25), seq(0.5,5,0.5)), freq=F)</R>
+    </command>
+
+    <!--
+    <command>
+      <matlab>hist(mean(binomial_rnd(10,0.4,100,500)))</matlab>
+      <R>hist(apply(matrix(rbinom(50000,10,0.4),nr=100),2,mean))</R>
+    </command>
+    <command>
+      <matlab>a=randn(100,10);</matlab>
+      <R><![CDATA[a <- matrix(rnorm(1000),nr=10)]]></R>
+    </command>
+    -->
+    <command>
+      <matlab>plot(sort(a))</matlab>
+      <R>plot(apply(a,1,sort),type="l")</R>
+    </command>
+    <!--
+    <command>
+      <matlab>plot(sort(mean(a)))</matlab>
+      <R>plot(sort(apply(a,1,mean)))</R>
+    </command>
+    -->
+    </group></section>
+
+<!--
+  <section>
+    <title>Reordering vectors</title>
+
+    <command>
+      <matlab>
+	<cmd>x=randn(1,10); y=randn(1,10);</cmd>
+	<cmd>plot(x,y)</cmd>
+	<cmd>[x_sort index]=sort(x);</cmd>
+	<cmd>plot(x_sort,y(index))</cmd>
+      </matlab>
+      <R>
+	<cmd><![CDATA[x <- rnorm(10) ; y <- rnorm(10)]]></cmd>
+	<cmd>plot(x,y,type="l")</cmd>
+	<cmd>plot(sort(x),y[order(x)],type="l")</cmd>
+      </R>
+    </command>
+  </section>
+-->
+
+  <section>
+    <title>3d data</title>
+
+    <section>
+      <title>Contour and image plots</title>
+
+      <group><command>
+	<description>Contour plot</description>
+	<matlab>contour(z)</matlab>
+	<R>
+	  <cmd>contour(z)</cmd>
+	  <plot file="r/contourplot.pdf"/>
+	</R>
+	<Python package="matplotlib.pylab">
+	  <cmd>levels, colls = contour(Z, V,</cmd>
+	  <cmd>    origin='lower', extent=(-3,3,-3,3))</cmd>
+	  <cmd>clabel(colls, levels, inline=1,</cmd>
+	  <cmd>    fmt='%1.1f', fontsize=10)</cmd>
+	  <plot file="python/contourplot.pdf"/>
+	</Python>
+	<IDL>contour, z</IDL>
+      </command>
+
+      <command>
+	<description>Filled contour plot</description>
+	<matlab>contourf(z); colormap(gray)</matlab>
+	<R>
+	  <cmd>filled.contour(x,y,z,</cmd>
+	  <cmd>    nlevels=7, color=gray.colors)</cmd>
+	  <!--<plot file="r/contourfillplot-gray.pdf"/>-->
+	</R>
+	<Python package="matplotlib.pylab">
+	  <cmd>contourf(Z, V,</cmd>
+	  <cmd>    cmap=cm.gray,</cmd>
+	  <cmd>    origin='lower',</cmd>
+	  <cmd>    extent=(-3,3,-3,3))</cmd>
+	  <plot file="python/contourfillplot.pdf"/>
+	</Python>
+	<IDL>
+	  <alt>contour, z, nlevels=7, /fill</alt>
+	  <alt>contour, z, nlevels=7, /overplot, /downhill</alt>
+	</IDL>
+      </command>
+
+      <command>
+	<description>Plot image data</description>
+	<matlab><cmd>image(z)</cmd><cmd>colormap(gray)</cmd></matlab>
+	<R>
+	  <cmd>image(z, col=gray.colors(256))</cmd>
+	  <!--<plot file="r/imageplot.pdf"/>-->
+	</R>
+	<Python package="matplotlib.pylab">
+	  <cmd>im = imshow(Z,</cmd>
+	  <cmd>    interpolation='bilinear',</cmd>
+	  <cmd>    origin='lower',</cmd>
+	  <cmd>    extent=(-3,3,-3,3))</cmd>
+	  <plot file="python/imageplot.png"/>
+	</Python>
+	<IDL>
+	  <cmd>tv, z</cmd>
+	  <cmd>loadct,0</cmd>
+	</IDL>
+      </command>
+
+      <command>
+	<description>Image with contours</description>
+	<Python package="matplotlib.pylab">
+	  <cmd># imshow() and contour() as above</cmd>
+	  <plot file="python/pcolor.pdf"/>
+	</Python>
+      </command>
+
+      <command>
+	<description>Direction field vectors</description>
+	<matlab>quiver()</matlab>
+	<scilab>champ()</scilab>
+	<Python package="matplotlib.pylab">quiver()</Python>
+      </command>
+
+      </group></section>
+
+    <section>
+      <title>Perspective plots of surfaces over the x-y plane</title>
+
+      <group><command>
+	<matlab>
+	  <cmd>n=-2:.1:2;</cmd>
+	  <cmd>[x,y] = meshgrid(n,n);</cmd>
+	  <cmd>z=x.*exp(-x.^2-y.^2);</cmd>
+	</matlab>
+	<Python package="Gnuplot.py,VTK,pylab">
+	  <cmd>n=arrayrange(-2,2,.1)</cmd>
+	  <cmd>[x,y] = meshgrid(n,n)</cmd>
+	  <cmd>z = x*power(math.e,-x**2-y**2)</cmd>
+	</Python>
+	<R>
+	  <cmd><![CDATA[f <- function(x,y) x*exp(-x^2-y^2)]]></cmd>
+	  <cmd><![CDATA[n <- seq(-2,2, length=40)]]></cmd>
+	  <cmd><![CDATA[z <- outer(n,n,f)]]></cmd>
+	</R>
+	<latex>
+	  f(x,y) = x e^{-x^2-y^2}
+	</latex>
+      </command>
+
+      <command>
+	<description>Mesh plot</description>
+	<matlab>mesh(z)</matlab>
+	<R>
+	  <cmd>persp(x,y,z,</cmd>
+	  <cmd>  theta=30, phi=30, expand=0.6,</cmd>
+	  <cmd>  ticktype='detailed')</cmd>
+	  <plot file="r/mesh.pdf" width="45mm"/>
+	</R>
+	<Python package="Gnuplot.py,DISLIN"/>
+	<IDL>surface, z</IDL>
+      </command>
+
+      <command>
+	<description>Surface plot</description>
+	<matlab>
+	  <alt>surf(x,y,z)</alt>
+	  <alt>surfl(x,y,z)</alt>
+	</matlab>
+	<Octave>
+	  <cmd>% no surfl()</cmd>
+	  <plot file="octave/surf.pdf"/>
+	</Octave>
+	<R>
+	  <cmd>persp(x,y,z,</cmd>
+	  <cmd>  theta=30, phi=30, expand=0.6,</cmd>
+	  <cmd>  col='lightblue', shade=0.75, ltheta=120,</cmd>
+	  <cmd>  ticktype='detailed')</cmd>
+	  <plot file="r/g.pdf" width="45mm"/>
+	</R>
+	<IDL>
+	  <cmd>shade_surf, z</cmd>
+	  <cmd>loadct,3</cmd>
+	</IDL>
+      </command>
+
+      <!--
+      <command>
+	<description>3d contour plot</description>
+	<matlab>contour3(z)</matlab>
+	<IDL>
+	  <cmd>surfr</cmd>
+	  <cmd>contour, z, nlevels=7, /t3d</cmd>
+	</IDL>
+      </command>
+
+      <command>
+	<description>Surface with x-y contours</description>
+	<matlab>surfc(z)</matlab>
+      </command>
+      -->
+
+      <!--
+      <command>
+	<description>Functions</description>
+	<matlab>
+	  <cmd>f = inline('x.*exp(-x.^2-y.^2)')</cmd>
+	  <cmd>ezmesh(f)</cmd>
+	</matlab>
+	<gnuplot>splot f(x,y) = x*exp(-x**2-y**2), f(x,y)</gnuplot>
+      </command>
+      -->
+      </group></section>
+
+    <section>
+      <title>Scatter (cloud) plots</title>
+
+      <group><command>
+	<description>3d scatter plot</description>
+	<matlab>plot3(x,y,z,'k+')</matlab>
+	<R package="lattice">cloud(z~x*y)</R>
+	<!--<R package="scatterplot3d">scatterplot3d(x,y,z)</R>-->
+	<gnuplot>
+	  <cmd>splot 'icc-gamut.csv'</cmd>
+	  <plot file="gnuplot/icc-gamut.pdf"/>
+	</gnuplot>
+      </command>
+
+      <!--
+      <command>
+	<description>Convex hull, 3d fill/solid</description>
+      </command>
+      -->
+
+      </group></section>
+
+    <!--
+    <section>
+      <title>Mapping/cartography</title>
+      
+    </section>
+    -->
+
+  </section>
+
+  <section>
+    <title>Save plot to a graphics file</title>
+
+    <!--
+	Supported formats
+                     Vector        Raster           Lossy
+	Matlab       EPS,WMF       PNG,BMP,TIFF     JPEG
+	R            EPS,PDF,SVG
+	matplotlib   EPS,SVG       PNG,*
+	Gnuplot      EPS,SVG
+    -->
+
+    <group><command>
+      <description>PostScript</description>
+      <matlab>
+	<cmd>plot(1:10)</cmd>
+	<cmd>print -depsc2 foo.eps</cmd>
+      </matlab>
+      <Octave>
+	<cmd>gset output "foo.eps"</cmd>
+	<cmd>gset terminal postscript eps</cmd>
+	<cmd>plot(1:10)</cmd>
+      </Octave>
+      <R>
+	<cmd>postscript(file="foo.eps")</cmd>
+	<cmd>plot(1:10)</cmd>
+	<cmd>dev.off()</cmd>
+      </R>
+      <Python package="matplotlib.pylab">savefig('foo.eps')</Python>
+      <gnuplot>
+	<cmd>set terminal postscript enhanced eps color</cmd>
+	<cmd>set output 'foo.eps'</cmd>
+	<cmd>plot 1:10</cmd>
+      </gnuplot>
+      <IDL>
+	<cmd>set_plot,'PS'</cmd>
+	<cmd>device, file='foo.eps', /land</cmd>
+	<cmd>plot x,y</cmd>
+	<cmd><![CDATA[device,/close & set_plot,'win']]></cmd>
+      </IDL>
+    </command>
+
+    <command>
+      <description>PDF</description>
+      <Python package="matplotlib.pylab">savefig('foo.pdf')</Python>
+      <R>pdf(file='foo.pdf')</R>
+      <matlab/>
+    </command>
+
+    <command>
+      <description>SVG (vector graphics for www)</description>
+      <Python package="matplotlib.pylab">savefig('foo.svg')</Python>
+      <R package="RSvgDevice">devSVG(file='foo.svg')</R>
+      <gnuplot>
+	<cmd>set terminal svg</cmd>
+	<cmd>set output 'foo.svg'</cmd>
+      </gnuplot>
+      <matlab/>
+    </command>
+
+    <command>
+      <description>PNG (raster graphics)</description>
+      <matlab>print -dpng foo.png</matlab>
+      <Python package="matplotlib.pylab">savefig('foo.png')</Python>
+      <R>png(filename = "Rplot%03d.png"</R>
+      <gnuplot>
+	<cmd>set terminal png medium</cmd>
+	<cmd>set output 'foo.png'</cmd>
+      </gnuplot>
+    </command>
+
+    <command>
+      <description>Output TeX/LaTeX math</description>
+      <axiom>outputAsTex(e)</axiom>
+      <maxima>tex(e);</maxima>
+      <maple>latex(e);</maple>
+      <mathematica>TexForm[e]</mathematica>
+      <mupad>generate::TeX(e);</mupad>
+    </command>
+
+    </group></section>
+
+</section>
+
+<section>
+  <title>Data analysis</title>
+
+  <section>
+    <title>Set membership operators</title>
+
+    <group><command>
+      <description>Create sets</description>
+      <matlab>
+	<cmd>a = [ 1 2 2 5 2 ];</cmd>
+	<cmd>b = [ 2 3 4 ];</cmd>
+      </matlab>
+      <R>
+	<cmd><![CDATA[a <- c(1,2,2,5,2)]]></cmd>
+	<cmd><![CDATA[b <- c(2,3,4)]]></cmd>
+      </R>
+      <Python>
+        <alt package="NumPy">a = array([1,2,2,5,2])</alt>
+        <alt package="NumPy">b = array([2,3,4])</alt>
+        <alt>a = set([1,2,2,5,2])</alt>
+        <alt>b = set([2,3,4])</alt>
+      </Python>
+    </command>
+
+    <command>
+      <description>Set unique</description>
+      <matlab>unique(a)</matlab>
+      <!--<Octave><alt>unique(a)</alt><alt>create_set(a)</alt></Octave>-->
+      <R>unique(a)</R>
+	<!--
+	    a <- unique(c(1,2,2,5,2))
+	    b <- unique(c(2,3,4))
+	-->
+      <Python>
+        <alt package="NumPy">unique1d(a)</alt>
+        <alt package="NumPy">unique(a)</alt>
+        <alt>set(a)</alt>
+      </Python>
+      <maxima package="SET">setify(a)</maxima>
+      <latex><![CDATA[
+	\left[\begin{array}{ccccc}
+        1 & 2 & 5
+	\end{array}\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Set union</description>
+      <matlab>union(a,b)</matlab>
+      <R>union(a,b)</R>
+      <Python>
+        <alt package="NumPy">union1d(a,b)</alt>
+        <alt>a.union(b)</alt>
+	<plot file="figures/sett-union.pdf" width="20mm"/>
+      </Python>
+      <maxima package="SET">union(a,b)</maxima>
+      <latex><![CDATA[
+        a \cup b =
+	\left[\begin{array}{ccccc}
+        1 & 2 & 3 & 4 & 5
+	\end{array}\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Set intersection</description>
+      <matlab>intersect(a,b)</matlab>
+      <!--<Octave>
+         <alt>intersection(a,b)</alt>
+         <alt>intersect(a,b)</alt></Octave>-->
+      <R>intersect(a,b)</R>
+      <!--
+	  note that intersect() etc call unique() directly.
+	  So the four examples here would work with a <- c(1,2,2,5,2).
+      -->
+      <Python>
+        <alt package="NumPy">intersect1d(a)</alt>
+        <alt>a.intersection(b)</alt>
+	<plot file="figures/sett-intersection.pdf" width="20mm"/>
+      </Python>
+      <maxima package="SET">intersect(a,b)</maxima>
+      <latex>
+	a \cap b =
+	\left[\begin{array}{c}
+	2
+	\end{array}\right]
+      </latex>
+    </command>
+
+    <command>
+      <description>Set difference</description>
+      <matlab>setdiff(a,b)</matlab>
+      <!--<Octave>
+        <alt>setdiff(a,b)</alt>
+        <alt>complement(b,a)</alt></Octave>-->
+      <R>setdiff(a,b)</R>
+      <Python>
+        <alt package="NumPy">setdiff1d(a,b)</alt>
+        <alt>a.difference(b)</alt>
+	<plot file="figures/sett-difference.pdf" width="20mm"/>
+      </Python>
+      <maxima package="SET">
+         <alt>setdifference(a,b)</alt>
+         <alt>complement(b,a)</alt>
+      </maxima>
+      <latex><![CDATA[
+        a \cap b^C =
+	\left[\begin{array}{ccccc}
+        1 & 5
+	\end{array}\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>Set exclusion</description>
+      <matlab>setxor(a,b)</matlab>
+      <R>setdiff(union(a,b),intersect(a,b))</R>
+      <Python>
+        <alt package="NumPy">setxor1d(a,b)</alt>
+        <alt>a.symmetric_difference(b)</alt>
+	<plot file="figures/sett-exclusion.pdf" width="20mm"/>
+      </Python>
+      <latex><![CDATA[
+        \left(a \cap b^C\right) \cup \left(a^C \cap b\right) =
+	\left[\begin{array}{ccccc}
+        1 & 3 & 4 & 5
+	\end{array}\right]
+      ]]></latex>
+    </command>
+
+    <command>
+      <description>True for set member</description>
+      <matlab>ismember(2,a)</matlab>
+      <R>
+	<alt>is.element(2,a)</alt>
+	<alt>2 %in% a</alt>
+      </R>
+      <Python>
+        <alt>2 in a</alt>
+        <alt package="NumPy">setmember1d(2,a)</alt>
+	<alt>contains(a,2)</alt>
+      </Python>
+    </command>
+
+<!--
+    <command>
+      <description>Overlapping</description>
+      <R>setequal(a,b)</R>
+    </command>
+-->
+
+    </group></section>
+
+  <section>
+    <title>Statistics</title>
+
+    <group><command>
+      <description>Average</description>
+      <matlab>mean(a)</matlab>
+      <R>apply(a,2,mean)</R>
+      <Python>
+        <alt package="NumPy">a.mean(axis=0)</alt>
+	<alt package="Numeric">average(a [,axis=0])</alt>
+	<alt package="scipy.stats,MLab,pylab">mean(a [,axis=0])</alt>
+      </Python>
+      <IDL>mean(a)</IDL>
+      <axiom>mean a</axiom>
+    </command>
+
+<!--
+    <command>
+      <description>Geometric mean</description>
+      <Python package="scipy.stats">gmean(a)</Python>
+    </command>
+
+    <command>
+      <description>Harmonic mean</description>
+      <Python package="scipy.stats">hmean(a)</Python>
+    </command>
+-->
+
+    <command>
+      <description>Median</description>
+      <matlab>median(a)</matlab>
+      <R>apply(a,2,median)</R>
+      <Python>
+        <alt package="NumPy">median(a)</alt>
+        <alt package="scipy.stats,MLab,pylab">median(a [,axis=0])</alt>
+      </Python>
+      <IDL>median(a)</IDL>
+      <axiom>median(a)</axiom>
+    </command>
+
+    <command>
+      <description>Standard deviation</description>
+      <matlab>std(a)</matlab>
+      <R>apply(a,2,sd)</R>
+      <Python>
+        <alt package="NumPy">a.std(axis=0)</alt>
+        <alt package="scipy.stats,MLab,pylab">std(a [,axis=0])</alt>
+      </Python>
+      <IDL>stddev(a)</IDL>
+    </command>
+
+    <command>
+      <description>Variance</description>
+      <matlab>var(a)</matlab>
+      <R>apply(a,2,var)</R>
+      <Python>
+        <alt package="NumPy">a.var(axis=0)</alt>
+        <alt package="scipy.stats">var(a)</alt>
+      </Python>
+      <IDL>variance(a)</IDL>
+    </command>
+
+    <command>
+      <description>Correlation coefficient</description>
+      <matlab>corr(x,y)</matlab>
+      <R>cor(x,y)</R>
+      <Python>
+        <alt package="NumPy">correlate(x,y)</alt>
+        <alt package="scipy.stats,MLab,pylab">corrcoef(x,y)</alt>
+      </Python>
+      <IDL>correlate(x,y)</IDL>
+    </command>
+
+    <command>
+      <description>Covariance</description>
+      <matlab>cov(x,y)</matlab>
+      <R>cov(x,y)</R>
+      <Python package="scipy.stats,MLab,pylab">cov(x,y)</Python>
+    </command>
+
+    </group>
+</section>
+
+  <section>
+    <title>Interpolation and regression</title>
+
+    <!--
+	<cmd>a=randn(1,10); x=1:10;</cmd>
+	<cmd><![CDATA[a <- rnorm(10)]]></cmd>
+	<cmd><![CDATA[x <- 1:10]]></cmd>
+    -->
+
+    <group><command>
+      <description>Straight line fit</description>
+      <matlab>
+	<cmd>z = polyval(polyfit(x,y,1),x)</cmd>
+	<cmd>plot(x,y,'o', x,z ,'-')</cmd>
+      </matlab>
+      <R>
+	<cmd><![CDATA[z <- lm(y~x)]]></cmd>
+	<cmd>plot(x,y)</cmd>
+	<cmd>abline(z)</cmd>
+      </R>
+      <Python package="matplotlib.pylab">
+        <cmd>(a,b) = polyfit(x,y,1)</cmd>
+        <!-- polyval -->
+	<cmd>plot(x,y,'o', x,a*x+b,'-')</cmd>
+      </Python>
+      <IDL>poly_fit(x,y,1)</IDL>
+    </command>
+
+    <command>
+      <description>Linear least squares $y = ax + b$</description>
+      <matlab>a = x\y</matlab><!-- x = [x; 1]; -->
+      <R>solve(a,b)</R>
+      <Python>
+        <alt package="NumPy.linalg">linalg.lstsq(x,y)</alt>
+        <alt package="Numeric.LinearAlgebra"
+	      >(a,b) = linear_least_squares(x,y)[0]</alt>
+      </Python>
+    </command>
+
+    <command>
+      <description>Polynomial fit</description>
+      <matlab>polyfit(x,y,3)</matlab>
+      <Python package="NumPy">polyfit(x,y,3)</Python>
+    </command>
+
+<!--
+    <command>
+      <description>Spline</description>
+      <matlab></matlab>
+    </command>
+
+    <command>
+      <description>Bezier</description>
+      <matlab></matlab>
+    </command>
+-->
+
+  <!--
+
+  </section>
+  <section>
+    <title>Multivariate analysis</title>
+
+  <command>
+    <description>PCA</description>
+    <Python></Python>
+  </command>
+
+  <command>
+    <description>PLS-R (NIPALS, Wold, Martens algorithms)</description>
+    <Python></Python>
+  </command>
+  -->
+
+    </group></section>
+
+  <section>
+    <title>Non-linear methods</title>
+
+<!--
+    <command>
+      <description>Solve linear equations $Ax=b$</description>
+      <matlab>x = A\b</matlab>
+      <R>solve(A,b)</R>
+      <Python>
+         <alt package="Numeric.LinearAlgebra"
+	      >solve_linear_equations(A,b)</Python>
+    </command>
+-->
+
+    <section>
+      <title>Polynomials, root finding</title>
+
+      <group><command>
+	<description>Polynomial</description>
+	<scilab>poly(1.,'x')</scilab>
+        <Python package="NumPy">poly()</Python><!-- poly1d() -->
+      </command>
+
+      <command>
+	<description>Find zeros of polynomial</description>
+	<matlab>roots([1 -1 -1])</matlab>
+	<R>polyroot(c(1,-1,-1))</R>
+        <Python package="NumPy">roots()</Python>
+	<latex>x^2 - x - 1 = 0</latex>
+      </command>
+
+      <command>
+	<description>Find a zero near $x = 1$</description>
+	<matlab>
+	  <cmd>f = inline('1/x - (x-1)')</cmd>
+	  <cmd>fzero(f,1)</cmd>
+	</matlab>
+	<latex>f(x) = \frac{1}{x} - (x-1)</latex>
+      </command>
+
+      <command>
+	<description>Solve symbolic equations</description>
+	<matlab package="Symbolic,Maple">solve('1/x = x-1')</matlab>
+	<latex>\frac{1}{x} = x-1</latex>
+      </command>
+
+      <command>
+	<description>Evaluate polynomial</description>
+	<matlab>polyval([1 2 1 2],1:10)</matlab>
+	<Python>
+          <alt package="matplotlib.pylab"
+               >polyval(array([1,2,1,2]),arange(1,11))</alt>
+        </Python>
+	<!--
+	  there's no direct equivalent of this in R but it's quite simple
+	  to write one:
+
+polyval <- function(c,x) {
+   n <- length(c)
+   y <- x*0+c[1];
+   for (i in 2:n) {
+     y <- c[i] +x*y
+   }
+   y
+ }
+
+so then
+R> polyval(c(1,2,1,2),1:10)   should work.
+	-->
+      </command>
+
+      <!--
+          polyint, polyder
+          polyadd, polysub, polymul, polydiv
+      -->
+
+      </group></section>
+
+    <section>
+      <title>Differential equations</title>
+      <!-- Ordinary differential equations
+	   Partial differential equations -->
+
+      <group>
+        <command>
+	<description>Discrete difference function and
+	    approximate derivative</description>
+	<matlab>diff(a)</matlab>
+	<Python package="NumPy">diff(x, n=1, axis=0)</Python>
+      </command>
+
+<!--
+      <command>
+	<description>Discrete integration</description>
+	<Python package="NumPy">trapz(x, axis=0)</Python>
+      </command>
+-->
+
+      <command>
+	<description>Solve differential equations</description>
+	<matlab></matlab>
+      </command>
+
+      </group>
+</section>
+
+  </section>
+
+  <section>
+    <title>Fourier analysis</title>
+
+    <group><command>
+      <description>Fast fourier transform</description>
+      <generic>fft(a)</generic>
+      <matlab>fft(a)</matlab>
+      <R>fft(a)</R>
+      <Python>
+        <alt package="NumPy.dft">fft(a)</alt>
+        <alt package="Numeric.FFT">fft(a)</alt>
+      </Python>
+      <IDL>fft(a)</IDL>
+    </command>
+
+    <command>
+      <description>Inverse fourier transform</description>
+      <matlab>ifft(a)</matlab>
+      <R>fft(a, inverse=TRUE)</R>
+      <Python>
+        <alt package="NumPy.dft">ifft(a)</alt>
+        <alt package="Numeric.FFT">inverse_fft(a)</alt>
+      </Python>
+      <IDL>fft(a),/inverse</IDL>
+    </command>
+
+    <command>
+      <description>Linear convolution</description>
+      <Python package="NumPy">convolve(x,y)</Python>
+      <IDL>convol()</IDL>
+    </command>
+
+    </group>
+  </section>
+
+<!--
+  <section>
+    <title>System theory</title>
+    bode plots
+    euler
+  </section>
+-->
+
+</section>
+
+
+<section>
+  <title>Symbolic algebra; calculus</title>
+
+  <group>
+<!--
+  <command>
+    <description>Two equations, two unknowns</description>
+  </command>
+
+-->
+
+  <command>
+    <description>Decimal output</description>
+    <axiom>numeric %</axiom>
+    <maxima>%,numer;</maxima>
+  </command>
+
+  <command>
+    <description>Simplification</description>
+    <axiom>
+      <alt>simplify(e)</alt>
+      <alt>normalize(e)</alt>
+    </axiom>
+    <maxima>
+      <alt>ratsimp(e)</alt>
+      <alt>radcan(e)</alt>
+    </maxima>
+    <maple>simplify(e)</maple>
+    <mathematica>
+      <alt>Simplify[e]</alt>
+      <alt>FullSimplify[e]</alt>
+    </mathematica>
+    <mupad>
+      <alt>simplify(e)</alt>
+      <alt>normal(e)</alt>
+    </mupad>
+    <reduce>e</reduce>
+    <derive>e</derive>
+  </command>
+
+  <command>
+    <description>Expand</description>
+  </command>
+
+  <command>
+    <description>Rectangular form</description>
+    <axiom>rectform e</axiom>
+  </command>
+
+  <command>
+    <description>Factorization</description>
+    <matlab>factor()</matlab>
+    <axiom>factor()</axiom>
+  </command>
+
+  <command>
+    <description>Integration of functions</description>
+    <axiom>integrate(f(x), x=0..1)</axiom>
+    <maxima>integrate(f(x), x, 0, 1)</maxima>
+    <maple>int(f(x), x=0..1)</maple>
+    <mupad>int(f(x), x=0..1)</mupad>
+    <mathematica>Integrate[f[x], {x,0,1}]</mathematica>
+    <latex>\int_{0}^{1} f(x) dx</latex>
+  </command>
+
+  <command>
+    <description>Differentiation</description>
+    <axiom>differentiate(%,x)</axiom>
+    <maxima>diff(%,x)</maxima>
+  </command>
+
+  <command>
+    <description>Taylor/Laurent/etc. series approxmation</description>
+    <axiom>series(%,x=0)</axiom>
+  </command>
+
+  <command>
+    <description>Solve equations</description>
+    <axiom>solve(sys,vars)</axiom>
+  </command>
+
+  <command>
+    <description>Laplace transform</description>
+    <axiom>laplace(e,t,s)</axiom>
+  </command>
+
+  </group>
+</section>
+
+<!--
+<section>
+  <title>Unit conversion</title>
+  
+  <command>
+    <description>Roman output</description>
+    <axiom>roman %</axiom>
+    <googlecalc>500 in roman numerals</googlecalc>
+  </command>
+
+  <googlecalc>5 kilometers in miles</googlecalc>
+
+</section>
+-->
+
+<section>
+  <title>Programming</title>
+  <group>
+
+  <command>
+    <description>Script file extension</description>
+    <matlab>.m</matlab>
+    <scilab>.sce</scilab>
+    <R>.R</R>
+    <Python>.py</Python>
+    <gnuplot><alt>.gp</alt><alt>.plt</alt></gnuplot>
+    <IDL>.idlbatch</IDL>
+    <!--<axiom>.axi</axiom>-->
+    <maxima><alt>.mc</alt><alt>.mac</alt></maxima>
+    <bc>bc</bc>
+  </command>
+
+  <command>
+    <description>Comment symbol (rest of line)</description>
+    <matlab>%</matlab>
+    <Octave><alt>%</alt><alt>#</alt></Octave>
+    <scilab>//</scilab>
+    <R>#</R>
+    <Python>#</Python>
+    <gnuplot>#</gnuplot>
+    <IDL>;</IDL>
+    <axiom>--</axiom>
+    <mathematica>(* .. *)</mathematica>
+    <maple>#</maple>
+    <maxima>/* .. */</maxima>
+    <mupad><alt>//</alt><alt>/* .. */</alt><alt># .. #</alt></mupad>
+    <derive>".."</derive>
+    <reduce>%</reduce>
+    <bc>/* .. */</bc>
+  </command>
+
+  <command>
+    <description>Import library functions</description>
+    <matlab>% must be in MATLABPATH</matlab>
+    <Octave>% must be in LOADPATH</Octave>
+    <scilab>getf('foo.sci')</scilab>
+    <R>library(RSvgDevice)</R>
+    <Python>from pylab import *</Python>
+    <maxima>load(SET);</maxima>
+  </command>
+
+  <command>
+    <description>Eval</description>
+    <matlab>
+      <cmd>string='a=234';</cmd>
+      <cmd>eval(string)</cmd>
+    </matlab>
+    <scilab>
+      <alt>eval()</alt>
+      <alt>evstr()</alt>
+      <alt>execstr()</alt>
+    </scilab>
+    <R>
+      <cmd><![CDATA[string <- "a <- 234"]]></cmd>
+      <cmd>eval(parse(text=string))</cmd>
+    </R>
+    <Python>
+      <cmd>string="a=234"</cmd>
+      <cmd>eval(string)</cmd>
+    </Python>
+  </command>
+
+<!--
+  <section>
+    <title>Data types</title>
+    Upcasting
+    Downcasting
+  </section>
+
+  <command>
+    <description>Eval</description>
+    <matlab>type plot</matlab>
+    <IDL>.run -t plot</IDL>
+  <command>
+-->
+
+  </group>
+    <section>
+    <title>Loops</title>
+
+    <!--
+	break
+    -->
+
+    <group><command>
+      <description>for-statement</description>
+      <matlab>for i=1:5; disp(i); end</matlab>
+      <!--<Octave>for i=1:5; disp(i); endfor</Octave>-->
+      <R>for(i in 1:5) print(i)</R>
+      <Python>for i in range(1,6): print(i)</Python>
+      <IDL>for k=1,5 do print,k</IDL>
+    </command>
+
+    <command>
+      <description>Multiline for statements</description>
+      <matlab>
+	<cmd>for i=1:5</cmd>
+        <cmd>   disp(i)</cmd>
+        <cmd>   disp(i*2)</cmd>
+        <cmd>end</cmd>
+      </matlab>
+      <R>
+	<cmd>for(i in 1:5) {</cmd>
+	<cmd>    print(i)</cmd>
+	<cmd>    print(i*2)</cmd>
+	<cmd>}</cmd>
+      </R>
+      <Python>
+	<cmd>for i in range(1,6):</cmd>
+	<cmd>    print(i)</cmd>
+	<cmd>    print(i*2)</cmd>
+      </Python>
+      <IDL>
+	<cmd>for k=1,5 do begin $</cmd>
+	<cmd><![CDATA[    print, i &$]]></cmd>
+	<cmd><![CDATA[    print, i*2 &$]]></cmd>
+	<cmd>end</cmd>
+      </IDL>
+    </command>
+
+
+    <!--
+	<command>
+	<title>Loops; while</title>
+i=0;
+while i < 10
+  disp(i*i)
+  i++ ;
+endwhile
+
+ i <- 0
+ while (i < 10) {
+   print(i*i)
+   i <- i+1
+ }
+        </command>
+	</section>
+    -->
+
+    </group></section>
+  <section>
+    <title>Conditionals</title>
+
+  <group><command>
+      <description>if-statement</description>
+      <matlab>if 1>0 a=100; end</matlab>
+      <!--<Octave>if 1>0 a=100; endif</Octave>-->
+      <R><![CDATA[if (1>0) a <- 100]]></R>
+      <Python>if 1>0: a=100</Python>
+      <IDL>if 1 gt 0 then a=100</IDL>
+    </command>
+
+    <command>
+      <description>if-else-statement</description>
+      <matlab>if 1>0 a=100; else a=0; end</matlab>
+      <IDL>if 1 gt 0 then a=100 else a=0</IDL>
+    </command>
+
+    <command>
+      <description>Ternary operator (if?true:false)</description>
+      <R>ifelse(a>0,a,0)</R>
+      <gnuplot>a>0?a:0</gnuplot>
+      <IDL>a>0?a:0</IDL>
+      <latex>a>0?a:0</latex>
+    </command>
+
+    <!--
+    <command>
+      <description>switch</description>
+
+<matlab>
+switch i
+  case 1
+    a=66;
+  case 5
+    a=77;
+  otherwise
+    a=-99;
+endswitch
+
+a <- switch(as.character(i),"1"=66, "5"=77, -99)
+    </command>
+
+    <command>
+      <description>Number of infut arguments</description>
+      <matlab>nargin</matlab>
+    </command>
+
+    -->
+
+  </group></section>
+
+  <section>
+    <title>Debugging</title>
+
+    <group><command>
+      <description>Most recent evaluated expression</description>
+      <matlab>ans</matlab>
+      <R>.Last.value</R>
+      <axiom>%</axiom>
+      <maxima>%</maxima>
+    </command>
+
+    <command>
+      <description>List variables loaded into memory</description>
+      <matlab><alt>whos</alt><alt>who</alt></matlab>
+      <R>objects()</R>
+      <IDL>help</IDL>
+    </command>
+
+    <command>
+      <description>Clear variable $x$ from memory</description>
+      <matlab><alt>clear x</alt><alt>clear [all]</alt></matlab>
+      <R>rm(x)</R>
+      <axiom>)clear properties x</axiom>
+    </command>
+
+    <command>
+      <description>Print</description>
+      <matlab>disp(a)</matlab>
+      <R>print(a)</R>
+      <Python>print a</Python>
+      <IDL>print, a</IDL>
+    </command>
+
+    <!--
+    <command>
+      <description>Invoke keyboard</description>
+      <matlab>keyboard</matlab>
+    </command>
+
+    <command>
+      <description>Set the debugging flag on a function</description>
+      <R>debug("function_name")</R>
+    </command>
+    -->
+
+    </group></section>
+
+  <section>
+    <title>Working directory and OS</title>
+
+    <group>
+      <command>
+      <description>List files in directory</description>
+      <matlab>
+	<alt>dir</alt>
+	<alt>ls</alt>
+      </matlab>
+      <!--<Octave>
+	<alt>dir</alt>
+	<alt>ls</alt>
+	<alt>system("ls")</alt></Octave>-->
+      <R>
+        <alt>list.files()</alt>
+        <alt>dir()</alt>
+      </R>
+      <Python package="os">os.listdir(".")</Python>
+      <IDL>dir</IDL>
+    </command>
+
+    <command>
+      <description>List script files in directory</description>
+      <matlab>what</matlab>
+      <R>list.files(pattern="\.r$")</R>
+      <Python package="grep">grep.grep("*.py")</Python>
+    </command>
+
+    <command>
+      <description>Displays the current working directory</description>
+      <matlab>pwd</matlab>
+      <R>getwd()</R>
+      <Python package="os">os.getwd()</Python>
+      <gnuplot>pwd</gnuplot>
+      <IDL>sd</IDL>
+    </command>
+
+    <command>
+      <description>Change working directory</description>
+      <matlab>cd foo</matlab>
+      <scilab>chdir('foo')</scilab>
+      <R>setwd('foo')</R>
+      <Python package="os">os.chdir('foo')</Python>
+      <gnuplot>cd 'foo'</gnuplot>
+      <IDL><alt>cd,'foo</alt><alt>sd,'foo</alt></IDL>
+      <axiom>)cd "foo"</axiom>
+    </command>
+
+    <command>
+      <description>Invoke a System Command</description>
+      <matlab>!notepad</matlab>
+      <scilab>host('notepad')</scilab>
+      <Octave>system("notepad")</Octave>
+      <R>system("notepad")</R>
+      <Python package="os">
+        <alt>os.system('notepad')</alt>
+	<alt>os.popen('notepad')</alt>
+      </Python>
+      <gnuplot>!notepad</gnuplot>
+      <IDL>spawn,'notepad'</IDL>
+    </command>
+
+    </group></section>
+
+  <!--
+  <section>
+    <title>Defining functions</title>
+
+    <command>
+      <matlab>
+	<cmd>function f = fibonacci(n)</cmd>
+        <cmd>f = zeros(n,1); f(1)=1; f(2)=2;</cmd>
+	<cmd>for k=3:n</cmd>
+        <cmd>   f(k) = f(k-1) + f(k-2);</cmd>
+        <cmd>end</cmd>
+      </matlab>
+
+
+      function out=h(n);
+      out=1./(meshgrid(1:n)+ meshgrid(1:n)' -1)
+      ;endfunction
+      <R>
+      h  <- function (n) 1/(col(diag(n))+row(diag(n))-1)
+      _or_
+      h <- function (n) { 1/outer(1:n,0:(n-1),"+") }
+    </command>
+  </section>
+  -->
+
+</section>
+
+<!--
+<section>
+  <title>Library code</title>
+
+  <command>
+    <description>Chemometrics; multivariate analysis</description>
+    <matlab>
+      <a href=""></a>
+      <a href=""></a>
+    </matlab>
+    <Python>ChemoPy</Python>
+  </command>
+
+  <command>
+    <description>Control systems</description>
+    <matlab></matlab>
+    <Python>ChemoPy</Python>
+  </command>
+
+  <command>
+    <description>Signal processing</description>
+    <matlab></matlab>
+    <Python></Python>
+  </command>
+
+  <command>
+    <description>Particle Image Velocimetry (PIV)</description>
+    <matlab>URAPIV</matlab>
+    <Python>PyPIV</Python>
+  </command>
+
+</section>
+-->
+
+</mathesaurus>

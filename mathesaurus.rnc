@@ -1,0 +1,89 @@
+default namespace = ""
+namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+namespace dc = "http://purl.org/dc/elements/1.1/"
+namespace cc = "http://web.resource.org/cc/"
+
+start =
+  element mathesaurus {
+    element modified { text },
+    element rdf:RDF {
+      element dc:title { text },
+      element dc:date { text },
+      element dc:creator { text },
+      element dc:contributor { text }*,
+      element dc:description { text },
+      element dc:type {
+        attribute rdf:resource { xsd:anyURI }
+      },
+      element cc:license {
+        attribute rdf:resource { xsd:anyURI }, text?
+      }
+    },
+    section+
+  }
+section =
+   element section {
+      element title { text },
+      group?, section*
+   }
+
+group =
+   element group {
+      element command {
+         element description { text }?,
+         element generic { code }?,
+         languages,
+         element latex { text }?,
+         element output {
+            code,
+            attribute from { text }
+         }*
+      }+
+   }
+
+languages =
+   element matlab { code }?
+ & element Octave { code }?
+ & element scilab { code }?
+ & element freemat { code }?
+ & element R { code }?
+ & element Python { code }?
+ & element gnuplot { code }?
+ & element IDL { code }?
+ & element GDL { code }?
+ & element PDL { code }?
+# & element GAUSS { code }?
+# & element Yorick { code }?
+# & element O-Matrix { code }?
+# & element Lush { code }?
+# & element Algae { code }?
+# & element Aplus { code }?
+ & element mathematica { code }?
+ & element maple { code }?
+ & element axiom { code }?
+ & element maxima { code }?
+ & element mupad { code }?
+ & element derive { code }?
+ & element reduce { code }?
+# & element yacas { code }?
+ & element bc { code }?
+
+code =
+   codeattr,
+   ( text
+    | ( (element cmd {
+           codeattr,
+           text }
+        | element alt {
+           codeattr,
+           text })+,
+       element plot {
+          attribute file { xsd:anyURI },
+          attribute width { text }?
+       }?
+    )
+    | empty
+   )
+codeattr =
+   attribute package { text }?,
+   attribute form { "functional" }?
