@@ -1,0 +1,6 @@
+body {
+  max-width:35em; margin:auto;
+  margin-top:3em; margin-bottom:9em; }
+p#colophon { font-size:smaller; }
+.temporary { font-style:italic; max-width:25em; }
+.references { font-size:smaller; }
