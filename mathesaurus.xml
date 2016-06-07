@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mathesaurus>
-<modified>Time-stamp: "2007-11-09T16:46:36 vidar"</modified>
+<modified>Time-stamp: "2016-06-07T21:11:16 vidarg"</modified>
 
 <rdf:RDF xmlns="http://web.resource.org/cc/"
 	 xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -32,7 +32,7 @@
   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
   <license rdf:resource="http://creativecommons.org/licenses/by-sa/2.5/">
     Copyright (c)2006 Vidar Bronken Gundersen
-    http://mathesaurus.sf.net/
+    https://github.com/vibrog/mathesaurus
     Permission is granted to copy, distribute and/or modify this document
     as long as the above attribution is kept and the resulting work is
     distributed under a license identical to this one.
@@ -41,6 +41,7 @@
 
 <!--
     To-do list:
+    Issues: https://sourceforge.net/p/mathesaurus/bugs/
     Plotting: Scilab, histogram, 3d gnuplot.py/dislin/VTK
     Matrix/vector multiplication
     Curve fitting, interpolation and regression

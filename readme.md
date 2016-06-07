@@ -49,7 +49,7 @@ Head over to <http://mathesaurus.sf.net/> for rendered documents.
 ## Copyright statement and attributions
 
 Copyright ©2006,2008 Vidar Bronken Gundersen,  
-<http://mathesaurus.sf.net/>  
+<https://github.com/vibrog/mathesaurus>  
 Permission is granted to copy, distribute and/or modify this document as
 long as the above attribution is retained.
 
