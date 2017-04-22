@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mathesaurus>
-<modified>Time-stamp: "2016-06-07T21:11:16 vidarg"</modified>
+<modified>Time-stamp: "\$Id: mathesaurus.xml 353 2017-04-22 14:04:50Z George \$, 2016-06-07T21:11:16 vidarg"</modified>
 
 <rdf:RDF xmlns="http://web.resource.org/cc/"
 	 xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -60,6 +60,7 @@
     <scilab>help</scilab>
     <R>help.start()</R>
     <Python package="IPython">help()</Python>
+    <mathematica>Help (from Menu)</mathematica>
     <gnuplot><alt>help</alt><alt>?</alt></gnuplot>
     <IDL>?</IDL>
     <axiom>)hd</axiom>
@@ -96,7 +97,11 @@
     </IDL>
     <maxima>describe(keyword)$</maxima>
     <maple>?keyword</maple>
-    <mathematica>?keyword</mathematica>
+    <mathematica>
+      <alt>?plot</alt>
+      <alt>??plot</alt>
+      <alt>F1</alt>
+    </mathematica>
     <mupad>?keyword</mupad>
   </command>
 
@@ -181,7 +186,7 @@
       <description>Start session</description>
       <Octave>octave -q</Octave>
       <R>Rgui</R>
-      <Python package="IPython">ipython -pylab</Python>
+      <Python package="IPython">jupyter console or jupyter notebook</Python>
       <IDL>idlde</IDL>
       <bc>bc -lq</bc>
       <gnuplot>pgnuplot</gnuplot>
@@ -191,7 +196,9 @@
       <description>Auto completion</description>
       <Octave><alt>TAB</alt><alt>M-?</alt></Octave>
       <scilab>! // commands in history</scilab>
+      <matlab>TAB</matlab>
       <Python package="IPython">TAB</Python>
+      <mathematica>TAB</mathematica>
     </command>
 
 <!--
@@ -212,6 +219,7 @@
 	<alt>execfile('foo.py')</alt>
         <alt package="IPython">run foo.py</alt>
       </Python>
+      <mathematica>math -script foo.wl</mathematica>
       <gnuplot>load 'foo.gp'</gnuplot>
       <IDL>
 	<alt>@"foo.idlbatch"</alt>
@@ -304,7 +312,8 @@
       <description>Assignment; defining a number</description>
       <matlab>a=1; b=2;</matlab>
       <R><![CDATA[a<-1; b<-2]]></R>
-      <Python>a=1; b=1</Python>
+      <Python>a=1; b=2</Python>
+      <mathematica>a=1; b=2</mathematica>
       <IDL><![CDATA[a=1 & b=1]]></IDL>
       <bc>a=1; b=1</bc>
     </command>
@@ -321,6 +330,10 @@
 	<alt>a + b</alt>
 	<alt form="functional">add(a,b)</alt>
       </Python>
+      <mathematica>
+        <alt>a + b</alt>
+        <alt form="functional">Plus[a,b]</alt>
+      </mathematica>
       <gnuplot>a + b</gnuplot>
       <IDL>a + b</IDL>
       <bc>a + b</bc>
@@ -337,6 +350,7 @@
         <alt>a - b</alt>
 	<alt form="functional">subtract(a,b)</alt>
       </Python>
+      <mathematica>a - b</mathematica>
       <gnuplot>a - b</gnuplot>
       <IDL>a - b</IDL>
       <bc>a - b</bc>
@@ -354,6 +368,10 @@
         <alt>a * b</alt>
 	<alt form="functional">multiply(a,b)</alt>
       </Python>
+      <mathematica>
+        <alt>a b</alt>
+        <alt form="functional">Times[a,b]</alt>"
+      </mathematica>
       <gnuplot>a * b</gnuplot>
       <IDL>a * b</IDL>
       <bc>a * b</bc>
@@ -371,6 +389,7 @@
         <alt>a / b</alt>
 	<alt form="functional">divide(a,b)</alt>
       </Python>
+      <mathematica>a / b</mathematica>
       <gnuplot>a / b</gnuplot>
       <IDL>a / b</IDL>
     </command>
@@ -384,6 +403,10 @@
 	<alt package="NumPy" form="functional">power(a,b)</alt>
 	<alt package="math" form="functional">pow(a,b)</alt>
       </Python>
+      <mathematica>
+        <alt>a ^ b</alt>
+        <alt form="functional">Power[a,b]</alt>
+      </mathematica>
       <gnuplot>a ** b</gnuplot>
       <IDL>a ^ b</IDL>
       <axiom>a**b</axiom>
@@ -452,6 +475,9 @@
     <command>
       <description>Factorial, $n!$</description>
       <matlab>factorial(a)</matlab>
+      <Python>
+        <alt package="math" form="functional">factorial(a)</alt>
+      </Python>      <mathematica>Factorial[a]</mathematica>
       <R>factorial(a)</R>
       <axiom>factorial(a)</axiom>
       <maxima>a!</maxima>
@@ -480,6 +506,10 @@
 	<alt>a == b</alt>
 	<alt>equal(a,b)</alt>
       </Python>
+      <mathematica>
+        <alt>a==b</alt>
+        <alt form="functional">Equal[a,b]</alt>
+      </mathematica>
       <IDL>a eq b</IDL>
       <bc>a == b</bc>
     </command>
@@ -493,6 +523,7 @@
         <alt><![CDATA[a < b]]></alt>
 	<alt>less(a,b)</alt>
       </Python>
+      <mathematica><![CDATA[a < b]]></mathematica>
       <IDL>a lt b</IDL>
       <bc><![CDATA[a < b]]></bc>
     </command>
@@ -506,6 +537,7 @@
         <alt>a > b</alt>
 	<alt>greater(a,b)</alt>
       </Python>
+      <mathematica><![CDATA[a > b]]></mathematica>
       <IDL>a gt b</IDL>
       <bc>a > b</bc>
     </command>
@@ -519,21 +551,23 @@
 	<alt><![CDATA[a <= b]]></alt>
 	<alt>less_equal(a,b)</alt>
       </Python>
+      <mathematica><![CDATA[a <= b]]></mathematica>
       <IDL>a le b</IDL>
       <bc><![CDATA[a <= b]]></bc>
     </command>
 
     <command>
       <description>Greater than or equal</description>
-      <generic>a >= b</generic>
-      <matlab>a >= b</matlab>
-      <R>a >= b</R>
+      <generic><![CDATA[a >= b]]></generic>
+      <matlab><![CDATA[a >= b]]></matlab>
+      <R><![CDATA[a >= b]]></R>
       <Python>
-	<alt>a >= b</alt>
+	<alt><![CDATA[a >= b]]></alt>
 	<alt>greater_equal(a,b)</alt>
       </Python>
+      <mathematica><![CDATA[a >= b]]></mathematica>
       <IDL>a ge b</IDL>
-      <bc>a >= b</bc>
+      <bc><![CDATA[a >= b]]></bc>
     </command>
 
     <command>
@@ -548,6 +582,10 @@
 	<alt>a != b</alt>
 	<alt>not_equal(a,b)</alt>
       </Python>
+      <mathematica>
+        <alt>a != b</alt>
+        <alt form="functional">Unequal[a,b]</alt>
+      </mathematica>
       <IDL>a ne b</IDL>
       <bc>a != b</bc>
     </command>
@@ -563,6 +601,10 @@
       <description>Short-circuit logical AND</description>
       <matlab><![CDATA[a && b]]></matlab>
       <Python>a and b</Python>
+      <mathematica>
+        <alt>And[a,b]</alt>
+        <alt><![CDATA[a && b]]></alt>
+      </mathematica>
       <R><![CDATA[a && b]]></R>
       <bc><![CDATA[a && b]]></bc>
     </command>
@@ -570,6 +612,10 @@
       <description>Short-circuit logical OR</description>
       <matlab>a || b</matlab>
       <Python>a or b</Python>
+      <mathematica>
+        <alt>Or[a,b]</alt>
+        <alt>a||b</alt>
+      </mathematica>
       <R>a || b</R>
       <bc>a || b</bc>
     </command>
@@ -625,17 +671,23 @@
         <alt>logical_not(a)</alt>
 	<alt>not a</alt>
       </Python>
+      <mathematica>
+        <alt>Not[a]</alt>
+        <alt>!a</alt>
+      </mathematica>
       <IDL>not a</IDL>
       <bc>!a</bc>
     </command>
 
     <command>
-      <description>True if any element is nonzero</description>
+      <description>True if any element is nonzero/true</description>
       <matlab>any(a)</matlab>
+      <mathematica>AnyTrue[a,TrueQ]</mathematica>
     </command>
     <command>
-      <description>True if all elements are nonzero</description>
+      <description>True if all elements are nonzero/true</description>
       <matlab>all(a)</matlab>
+      <mathematica>AllTrue[a,TrueQ]</mathematica>
       <scilab>and(a)</scilab>
     </command>
 
@@ -774,6 +826,7 @@
       <matlab>log10(a)</matlab>
       <R>log10(a)</R>
       <Python package="math">math.log10(a)</Python>
+      <mathematica>Log[a,10]</mathematica>
       <gnuplot>log10(a)</gnuplot>
       <IDL>alog10(a)</IDL>
       <latex>\log_{10} a </latex>
@@ -784,6 +837,7 @@
       <matlab>log2(a)</matlab>
       <R>log2(a)</R>
       <Python package="math">math.log(a, 2)</Python>
+      <mathematica>Log[a,2]</mathematica>
       <latex>\log_2 a </latex>
     </command>
 
@@ -793,6 +847,7 @@
       <matlab>exp(a)</matlab>
       <R>exp(a)</R>
       <Python package="math">math.exp(a)</Python>
+      <mathematica>Exp[a]</mathematica>
       <gnuplot>exp(a)</gnuplot>
       <IDL>exp(a)</IDL>
       <bc>e(a)</bc>
@@ -813,6 +868,7 @@
         <alt package="NumPy">around(a)</alt>
         <alt package="math">math.round(a)</alt>
       </Python>
+      <mathematica>Round[a]</mathematica>
       <IDL>round(a)</IDL>
     </command>
 
@@ -821,6 +877,7 @@
       <matlab>ceil(a)</matlab>
       <R>ceil(a)</R>
       <Python package="NumPy,math">ceil(a)</Python>
+      <mathematica>Ceiling[a]</mathematica>
       <gnuplot>ceil(a)</gnuplot>
       <IDL>ceil(a)</IDL>
     </command>
@@ -830,6 +887,7 @@
       <matlab>floor(a)</matlab>
       <R>floor(a)</R>
       <Python package="NumPy,math">floor(a)</Python>
+      <mathematica>Floor[a]</mathematica>
       <gnuplot>floor(a)</gnuplot>
       <IDL>floor(a)</IDL>
     </command>
@@ -838,6 +896,7 @@
       <description>Round towards zero</description>
       <matlab>fix(a)</matlab>
       <Python package="NumPy">fix(a)</Python>
+      <mathematica>IntegerPart[a]</mathematica>
     </command>
 
 </group>
@@ -896,6 +955,7 @@
         <description>Not a Number</description>
         <matlab>NaN</matlab>
         <Python package="numarray.ieeespecial">nan</Python>
+        <mathematica>Indeterminate</mathematica>
         <scilab>%nan</scilab>
       </command>
 
@@ -904,6 +964,7 @@
         <matlab>Inf</matlab>
         <scilab>%inf</scilab>
         <Python package="numarray.ieeespecial">inf</Python>
+        <mathematica>Infinity</mathematica>
       </command>
 
       <command>
@@ -945,6 +1006,7 @@
       <scilab>%i</scilab>
       <R>1i</R><!-- R treats "i" as a variable name -->
       <Python package="cmath,numpy">z = 1j</Python>
+        <mathematica>I</mathematica>
       <gnuplot>{0,1}</gnuplot>
       <IDL>complex(0,1)</IDL>
       <axiom>%i</axiom>
@@ -961,6 +1023,7 @@
         <alt>z = 3+4j</alt>
         <alt>z = complex(3,4)</alt>
       </Python>
+      <mathematica>z = 3 + 4 I</mathematica>
       <gnuplot>{3,4}</gnuplot>
       <IDL>z = complex(3,4)</IDL>
       <axiom>3+4*%i</axiom>
@@ -973,6 +1036,7 @@
       <matlab>abs(z)</matlab>
       <R><alt>abs(3+4i)</alt><alt>Mod(3+4i)</alt></R>
       <Python package="cmath">abs(3+4j)</Python>
+      <mathematica>Abs[3 + 4 I]</mathematica>
       <gnuplot>abs({3,4})</gnuplot>
       <IDL>abs(z)</IDL>
       <maxima>abs(z);</maxima>
@@ -984,6 +1048,7 @@
       <matlab>real(z)</matlab>
       <R>Re(3+4i)</R>
       <Python>z.real</Python>
+      <mathematica>Re[z]</mathematica>
       <gnuplot>real({3,4})</gnuplot>
       <IDL>real_part(z)</IDL>
       <maxima>realpart(z)</maxima>
@@ -995,6 +1060,7 @@
       <matlab>imag(z)</matlab>
       <R>Im(3+4i)</R>
       <Python>z.imag</Python>
+      <mathematica>Im[z]</mathematica>
       <IDL>imaginary(z)</IDL>
       <gnuplot>imag({3,4})</gnuplot>
       <maxima>imagpart(z)</maxima>
@@ -1003,6 +1069,7 @@
     <command>
       <description>Argument</description>
       <matlab>arg(z)</matlab>
+      <mathematica>Arg[z]</mathematica>
       <R>Arg(3+4i)</R>
       <gnuplot>arg({3,4})</gnuplot>
     </command>
@@ -1013,6 +1080,7 @@
       <matlab>conj(z)</matlab>
       <R>Conj(3+4i)</R>
       <Python>z.conj(); z.conjugate()</Python>
+      <mathematica>Conjugate[z]</mathematica>
       <IDL>conj(z)</IDL>
     </command>
 
@@ -1060,6 +1128,7 @@
       <matlab>atan(a,b)</matlab>
       <R>atan2(b,a)</R>
       <Python package="math">atan2(b,a)</Python>
+      <mathematica>ArcTan[a,b]</mathematica>
       <!-- arctan2(a,b) -->
     </command>
 
@@ -1079,6 +1148,7 @@
     <command>
       <description>Hypotenus; Euclidean distance</description>
       <Python>hypot(x,y)</Python>
+      <mathematica>Norm[{x,y}]</mathematica>
       <latex>\sqrt{x^2+y^2}</latex>
     </command>
 
@@ -1099,6 +1169,7 @@
         <alt package="Numeric.RandomArray">random((10,))</alt>
 	<alt package="Numeric.RandomArray">uniform(0,1,(10,))</alt>
       </Python>
+        <mathematica>RandomReal[1,10]</mathematica>
       <IDL>randomu(seed, 10)</IDL>
     </command>
 
@@ -1111,6 +1182,7 @@
         <alt package="NumPy">random.uniform(2,7,(10,))</alt>
         <alt package="Numeric.RandomArray">uniform(2,7,(10,))</alt>
       </Python>
+      <mathematica>RandomReal[{2,7},10]</mathematica>
       <IDL>2+5*randomu(seed, 10)</IDL>
     </command>
 
@@ -1123,6 +1195,7 @@
         <alt package="NumPy">random.uniform(0,1,(6,6))</alt>
         <alt package="Numeric.RandomArray">uniform(0,1,(6,6))</alt>
       </Python>
+      <mathematica>RandomReal[1,{6,6}]</mathematica>
       <IDL>randomu(seed,[6,6])</IDL>
     </command>
 
@@ -1136,6 +1209,7 @@
         <alt package="Numeric.RandomArray">standard_normal((10,))</alt>
 	<!--<cmd>normal(0,1,(10,))</cmd>-->
       </Python>
+      <mathematica>RandomReal[NormalDistribution[],10]</mathematica>
       <IDL>randomn(seed, 10)</IDL>
     </command>
 
@@ -1173,6 +1247,7 @@
     <matlab>a=[2 3 4 5];</matlab>
     <R><![CDATA[a <- c(2,3,4,5)]]></R>
     <Python package="NumPy">a=array([2,3,4,5])</Python>
+      <mathematica>a = {2,3,4,5}</mathematica>
       <!--<alt package="NumPy">r_[1:10]</alt>-->
     <IDL>a = [2, 3, 4, 5]</IDL>
   </command>
@@ -1187,6 +1262,7 @@
       <alt package="NumPy">r_[1:10,'c']</alt>
       <alt package="Numeric">transpose(array([2,3,4,5]))</alt>
     </Python>
+    <mathematica>a = {2,3,4,5}</mathematica>
     <IDL>transpose([2,3,4,5])</IDL>
     <!--
 	rotate(b,1)
@@ -1215,6 +1291,7 @@
 	<cmd>indgen(10)+1</cmd>
 	<cmd>dindgen(10)+1</cmd>
       </IDL>
+        <mathematica>Range[10]</mathematica>
     </command>
 
     <command>
@@ -1223,6 +1300,7 @@
       <R>seq(0,length=10)</R>
       <Python package="NumPy">arange(10.)</Python>
       <IDL>dindgen(10)</IDL>
+      <mathematica>Table[x,{x,0.,9.}]</mathematica>
     </command>
 
     <command>
@@ -1231,6 +1309,7 @@
       <R>seq(1,10,by=3)</R>
       <Python package="NumPy">arange(1,11,3)</Python>
       <IDL>indgen(4)*3+1</IDL>
+      <mathematica>Range[1, 10, 3]</mathematica>
     </command>
 
     <command>
@@ -1241,6 +1320,7 @@
 	<alt>10:1</alt>
       </R>
       <Python package="NumPy">arange(10,0,-1)</Python>
+      <mathematica>Range[10, 1, -1]</mathematica>
     </command>
 
     <command>
@@ -1248,6 +1328,7 @@
       <matlab>10:-3:1</matlab>
       <R>seq(from=10,to=1,by=-3)</R>
       <Python package="NumPy">arange(10,0,-3)</Python>
+      <mathematica>Range[10, 1, -3]</mathematica>
     </command>
 
     <command>
@@ -1276,12 +1357,14 @@
 	<alt package="Numeric">a[::-1]; a.reverse()</alt>
       </Python>
       <IDL>reverse(a)</IDL>
+      <mathematica>Reverse[a]</mathematica>
     </command>
 
     <command>
       <description>Set all values to same scalar value</description>
       <matlab>a(:) = 3</matlab>
       <Python package="NumPy">a.fill(3), a[:] = 3</Python>
+      <mathematica>a[;;]=3</mathematica>
     </command>
 
     </group>
@@ -1301,6 +1384,7 @@
         <alt>[a,a]</alt>
         <alt>rebin(a,2,size(a))</alt>
       </IDL>
+        <mathematica>Catenate[{a, b}]</mathematica>
     </command>
 
 <!--
@@ -1389,12 +1473,14 @@
       <scilab>a(2:$)</scilab>
       <R>a[-1]</R>
       <Python>a[1:]</Python>
+        <mathematica>a[[2;;]]</mathematica>
     </command>
 
     <command>
       <description>miss the tenth element</description>
       <matlab>a([1:9])</matlab>
       <R>a[-10]</R>
+      <mathematica>a[[1;;9]]</mathematica>
     </command>
 
     <command>
@@ -1407,12 +1493,14 @@
       <matlab>a(end)</matlab>
       <scilab>a($)</scilab>
       <Python>a[-1]</Python>
+      <mathematica>a[[-1]]</mathematica>
     </command>
 
     <command>
       <description>last two elements</description>
       <matlab>a(end-1:end)</matlab>
       <Python>a[-2:]</Python>
+      <mathematica>a[[-2;;-1]]</mathematica>
     </command>
 
     </group></section>
@@ -1426,6 +1514,7 @@
       <matlab>max(a,b)</matlab>
       <Python package="NumPy">maximum(a,b)</Python>
       <R>pmax(a,b)</R>
+      <mathematica>Map[Max, Partition[Riffle[a, b], 2]]</mathematica>
     </command>
 
     <command>
@@ -1433,6 +1522,7 @@
       <matlab>max([a b])</matlab>
       <Python package="NumPy">concatenate((a,b)).max()</Python>
       <R>max(a,b)</R>
+      <mathematica>Max[a,b]</mathematica>
     </command>
 
     <command>
@@ -1454,6 +1544,7 @@
       <matlab>a.*a</matlab>
       <R>a*a</R>
       <Python package="NumPy">a*a</Python>
+  <mathematica>a a</mathematica>
     </command>
 
     <command>
@@ -1466,6 +1557,7 @@
       <description>Vector dot product, $u \cdot v$</description>
       <matlab>dot(u,v)</matlab>
       <Python>dot(u,v)</Python>
+      <mathematica>Dot[u,v]</mathematica>
     </command>
 
     <!--
@@ -1565,6 +1657,7 @@
         <alt>concatenate((a,b), axis=1)</alt>
         <alt>hstack((a,b))</alt><!-- column_stack((a,b)) -->
       </Python>
+      <mathematica>{a,b}</mathematica>
     </command>
 
     <command>
@@ -1627,6 +1720,7 @@
 	<alt>array(0,c(3,5))</alt>
       </R>
       <Python package="NumPy">zeros((3,5),Float)</Python>
+  <mathematica>ConstantArray[0.,{3,5}]</mathematica>
       <IDL>dblarr(3,5)</IDL>
       <latex><![CDATA[
 	\left[
@@ -1642,6 +1736,7 @@
     <command>
       <description>0 filled array of integers</description>
       <Python package="NumPy">zeros((3,5))</Python>
+      <mathematica>ConstantArray[0,{3,5}]</mathematica>
       <IDL>intarr(3,5)</IDL>
     </command>
 
@@ -1653,6 +1748,7 @@
 	<alt>array(1,c(3,5))</alt>
       </R>
       <Python package="NumPy">ones((3,5),Float)</Python>
+      <mathematica>ConstantArray[1.,{3,5}]</mathematica>
       <IDL>dblarr(3,5)+1</IDL>
       <latex><![CDATA[
 	\left[
@@ -1676,6 +1772,7 @@
         <!--<alt package="NumPy">a.fill(9)</alt>-->
         <alt package="Numeric">ones((3,5))*9</alt>
       </Python>
+      <mathematica>ConstantArray[9,{3,5}]</mathematica>
       <IDL>intarr(3,5)+9</IDL>
       <latex><![CDATA[\left[
       \begin{array}{ccccc}
@@ -1693,6 +1790,7 @@
       <scilab>eye(3,3)</scilab>
       <R>diag(1,3)</R>
       <Python package="NumPy">identity(3)</Python>
+      <mathematica>IdentityMatrix[3]</mathematica>
       <IDL>identity(3)</IDL>
       <latex><![CDATA[\left[\begin{array}{ccc}
 	1 & 0 & 0 \\
@@ -1707,6 +1805,7 @@
       <matlab>diag([4 5 6])</matlab>
       <R>diag(c(4,5,6))</R>
       <Python package="NumPy">diag((4,5,6))</Python>
+      <mathematica>DiagonalMatrix[{4,5,6}]</mathematica>
       <IDL>diag_matrix([4,5,6])</IDL>
       <axiom>diagonalMatrix([4,5,6])</axiom>
       <latex><![CDATA[
@@ -1757,6 +1856,7 @@ then di(1:10,3) works as per Octave.
     <command>
       <description>Empty array</description>
       <Python package="NumPy">a = empty((3,3))</Python>
+      <mathematica>a = {}</mathematica>
     </command>
 
     </group></section>
@@ -1775,6 +1875,10 @@ then di(1:10,3) works as per Octave.
 	<alt package="Numeric">a.shape = (2,3)</alt>
 	<alt package="numarray">a.setshape(2,3)</alt>
       </Python>
+  <mathematica>
+    <alt>Partition[Range[6], 3]</alt>
+    <alt>ArrayReshape[Range[6], {2, 3}]</alt>
+  </mathematica>
       <IDL>reform(a,2,3)</IDL>
       <latex><![CDATA[\left[\begin{array}{ccc}
 	1 & 2 & 3 \\
@@ -1793,6 +1897,7 @@ then di(1:10,3) works as per Octave.
 	<alt>array(1:6,c(2,3))</alt>
       </R>
       <Python package="NumPy">arange(1,7).reshape(-1,2).transpose()</Python>
+      <mathematica>Transpose[Partition[Range[6], 2, 2]]</mathematica>
       <latex><![CDATA[\left[\begin{array}{ccc}
 	1 & 3 & 5 \\
 	2 & 4 & 6 \\
@@ -1802,12 +1907,13 @@ then di(1:10,3) works as per Octave.
 
     <command>
       <description>Flatten to vector (by rows, like comics)</description>
-      <matlab>a'(:)</matlab>
+      <matlab>a(:)'</matlab>
       <R>as.vector(t(a))</R>
       <Python>
         <alt package="NumPy">a.flatten()</alt><!-- a.ravel() -->
 	<alt package="Numeric">ravel(a)</alt>
       </Python>
+      <mathematica>Flatten[a]</mathematica>
       <latex><![CDATA[\left[\begin{array}{cccccc}
 	1 & 2 & 3 & 4 & 5 & 6
 	\end{array}\right]]]>
@@ -1853,6 +1959,7 @@ then di(1:10,3) works as per Octave.
       <matlab>b = a</matlab>
       <R>b = a</R>
       <Python>b = a.copy()</Python>
+  <mathematica>b = a</mathematica>
     </command>
 
     <!--
@@ -1915,6 +2022,8 @@ then di(1:10,3) works as per Octave.
 	\end{array}
 	\right]
       ]]></latex>
+      <mathematica>
+        <cmd>a = {{11, 12, 13, 14},</cmd><cmd>{21, 22, 23, 24},</cmd><cmd>{31, 32, 33, 34}}</cmd></mathematica>
     </command>
 
     <command>
@@ -1922,6 +2031,7 @@ then di(1:10,3) works as per Octave.
       <matlab>a(2,3)</matlab>
       <R>a[2,3]</R>
       <Python>a[1,2]</Python>
+      <mathematica>a[[2,3]]</mathematica>
       <IDL>a(2,1)</IDL><!-- order of indices is opposite -->
       <latex>
 	a_{23}
@@ -1933,6 +2043,7 @@ then di(1:10,3) works as per Octave.
       <matlab>a(1,:)</matlab>
       <R>a[1,]</R>
       <Python>a[0,]</Python>
+      <mathematica>a[[1]]</mathematica>
       <IDL>a(*,0)</IDL>
       <latex><![CDATA[
 	\left[
@@ -1948,6 +2059,7 @@ then di(1:10,3) works as per Octave.
       <matlab>a(:,1)</matlab>
       <R>a[,1]</R>
       <Python>a[:,0]</Python>
+      <mathematica>a[[All,1]]</mathematica>
       <IDL>a(0,*)</IDL>
       <latex>
 	\left[
@@ -1983,6 +2095,10 @@ then di(1:10,3) works as per Octave.
       <scilab>a(2:$,:)</scilab>
       <R>a[-1,]</R>
       <Python>a[1:,]</Python>
+      <mathematica>
+        <alt>a[[2;;]]</alt>
+        <alt>Take[a,2;;]</alt>
+      </mathematica>
       <IDL>a(*,1:*)</IDL>
       <latex><![CDATA[
 	\left[
@@ -1998,6 +2114,7 @@ then di(1:10,3) works as per Octave.
       <description>Last two rows</description>
       <matlab>a(end-1:end,:)</matlab>
       <Python>a[-2:,]</Python>
+      <mathematica>a[[-2;;]]</mathematica>
       <latex><![CDATA[
 	\left[
 	\begin{array}{cccc}
@@ -2012,6 +2129,7 @@ then di(1:10,3) works as per Octave.
       <description>Strides: Every other row</description>
       <matlab>a(1:2:end,:)</matlab>
       <Python>a[::2,:]</Python>
+      <mathematica>a[[1;;-1;;2]]</mathematica>
       <!--<IDL>a(*:*:2,1:*:2)</IDL>-->
       <latex><![CDATA[
 	\left[
@@ -2060,6 +2178,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy">a.take([0,2,3],axis=1)</alt>
         <alt package="Numeric">take(a,[0,2,3],axis=1)</alt>
       </Python>
+      <mathematica>Drop[a,None,2]</mathematica>
       <!--
 	  # del data[70]
 	  # data.pop([70])
@@ -2078,6 +2197,7 @@ then di(1:10,3) works as per Octave.
     <command>
       <description>Diagonal</description>
       <Python package="NumPy">a.diagonal(offset=0)</Python>
+      <mathematica>Diagonal[a]</mathematica>
       <latex><![CDATA[
 	\left[
 	\begin{array}{cccc}
@@ -2098,6 +2218,7 @@ then di(1:10,3) works as per Octave.
       <matlab>a(:,1) = 99</matlab>
       <R><![CDATA[a[,1] <- 99]]></R>
       <Python>a[:,0] = 99</Python>
+        <mathematica>a[[;;,1]] = 99</mathematica>
     </command>
 
     <command>
@@ -2115,6 +2236,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy">a.clip(min=None, max=90)</alt>
         <alt package="Numeric">choose(a>90, (a,90))</alt>
       </Python>
+      <mathematica>Clip[a,{-Infinity,90}]</mathematica>
       <IDL>a>90</IDL>
     </command>
 
@@ -2124,6 +2246,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy">a.clip(min=2, max=5)</alt>
         <alt package="Numeric">clip(a,2,5)</alt>
       </Python>
+      <mathematica>Clip[a,{2,5}]</mathematica>
       <IDL><![CDATA[a < 2 > 5]]></IDL>
     </command>
 
@@ -2140,6 +2263,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy">a.conj().transpose()</alt>
         <alt package="Numeric">transpose(a)</alt>
       </Python>
+      <mathematica>ConjugateTranspose[a]</mathematica>
       <IDL>transpose(a)</IDL>
       <maxima>transpose(a);</maxima>
     </command>
@@ -2151,6 +2275,7 @@ then di(1:10,3) works as per Octave.
         <alt>transpose(a)</alt>
       </matlab>
       <Python package="NumPy">a.transpose()</Python>
+      <mathematica>Transpose[a]</mathematica>
     </command>
 
     <command>
@@ -2161,6 +2286,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy.linalg">linalg.det(a)</alt>
         <alt package="Numeric.LinearAlgebra">determinant(a)</alt>
       </Python>
+      <mathematica>Det[a]</mathematica>
       <IDL>determ(a)</IDL>
       <axiom>determinant a</axiom>
       <maxima>determinant(a);</maxima>
@@ -2174,6 +2300,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy.linalg">linalg.inv(a)</alt>
         <alt package="Numeric.LinearAlgebra">inverse(a)</alt>
       </Python>
+      <mathematica>Inv[a]</mathematica>
       <IDL>invert(a)</IDL>
       <axiom>inverse a</axiom>
       <maxima>invert(a),detout;</maxima>
@@ -2184,12 +2311,14 @@ then di(1:10,3) works as per Octave.
       <matlab>pinv(a)</matlab>
       <R package="mass">ginv(a)</R>
       <Python package="NumPy.linalg">linalg.pinv(a)</Python>
+      <mathematica>PseduoInverse[a]</mathematica>
     </command>
 
     <command>
       <description>Norms</description>
       <matlab>norm(a)</matlab>
       <Python package="matplotlib.mlab">norm(a)</Python>
+      <mathematica>Norm[a]</mathematica>
     </command>
 
     <command>
@@ -2223,6 +2352,7 @@ then di(1:10,3) works as per Octave.
       <description>Cholesky factorization</description>
       <matlab>chol(a)</matlab>
       <Python package="NumPy.linalg">linalg.cholesky(a)</Python>
+      <mathematica>CholeskyDecomposition[a]</mathematica>
     </command>
 
     <!--
@@ -2240,6 +2370,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy.linalg">linalg.eig(a)[1]</alt>
         <alt package="Numeric.LinearAlgebra">eigenvectors(a)</alt>
       </Python>
+      <mathematica>Eigenvectors[a]</mathematica>
       <axiom>eigenvectors a</axiom>
     </command>
 
@@ -2248,6 +2379,7 @@ then di(1:10,3) works as per Octave.
       <matlab>rank(a)</matlab>
       <R>rank(a)</R>
       <Python package="NumPy">rank(a)</Python>
+      <mathematica>MatrixRank[a]</mathematica>
     </command>
 
     </group></section>
@@ -2261,6 +2393,7 @@ then di(1:10,3) works as per Octave.
       <scilab>sum(a,'c')</scilab>
       <R>apply(a,2,sum)</R>
       <Python package="NumPy">a.sum(axis=0)</Python>
+      <mathematica>Apply[Plus,Transpose[a]]</mathematica>
           <!--add.reduce(a [,axis=0])-->
       <IDL>total(a,2)</IDL>
     </command>
@@ -2271,6 +2404,7 @@ then di(1:10,3) works as per Octave.
       <scilab>sum(a,'r')</scilab>
       <R>apply(a,1,sum)</R>
       <Python package="NumPy">a.sum(axis=1)</Python>
+      <mathematica>Apply[Plus, a]</mathematica>
       <IDL>total(a,1)</IDL>
     </command>
 
@@ -2288,7 +2422,9 @@ then di(1:10,3) works as per Octave.
 
     <command>
       <description>Sum along diagonal</description>
+      <matlab>trace(a)</matlab>
       <Python package="NumPy">a.trace(offset=0)</Python>
+      <mathematica>Tr[a]</mathematica>
     </command>
 
     <command>
@@ -2296,6 +2432,7 @@ then di(1:10,3) works as per Octave.
       <matlab>cumsum(a)</matlab>
       <R>apply(a,2,cumsum)</R>
       <Python package="NumPy">a.cumsum(axis=0)</Python>
+      <mathematica>Accumulate[Transpose[a]]</mathematica>
     </command>
 
     <!--
@@ -2332,6 +2469,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy">a.ravel().sort()</alt>
         <alt package="Numeric">sort(a.flat)</alt>
       </Python>
+      <mathematica>Sort[Flatten[a]]</mathematica>
       <latex><![CDATA[
         \left[
         \begin{array}{ccc}
@@ -2352,6 +2490,7 @@ then di(1:10,3) works as per Octave.
 	<alt package="NumPy">a.sort(axis=0)</alt>
 	<alt package="NumPy,MLab">msort(a)</alt>
       </Python>
+      <mathematica>Transpose[Map[Sort, Transpose[a]]]</mathematica>
       <IDL>sort(a)</IDL>
       <latex><![CDATA[
         \left[
@@ -2372,6 +2511,7 @@ then di(1:10,3) works as per Octave.
       <Python>
 	<alt package="NumPy">a.sort(axis=1)</alt>
       </Python>
+      <mathematica>Map[Sort,a]</mathematica>
       <latex><![CDATA[
         \left[
         \begin{array}{ccc}
@@ -2445,6 +2585,7 @@ then di(1:10,3) works as per Octave.
         <alt package="NumPy">a.max(1)</alt>
 	<alt package="matplotlib.pylab">amax(a, axis=1)</alt>
       </Python>
+      <mathematica>Map[Max,a]</mathematica>
       <IDL>max(a,DIMENSION=1)</IDL>
     </command>
 
@@ -2463,6 +2604,7 @@ then di(1:10,3) works as per Octave.
     <command>
       <description>return indices, i</description>
       <matlab>[v i] = max(a)</matlab>
+      <mathematica>With[{o = Ordering[a, -1]}, {o, a[[o]]}]</mathematica>
       <scilab>[v,i] = max(a,'c')</scilab>
       <R><![CDATA[i <- apply(a,1,which.max)]]></R>
     </command>
@@ -2591,7 +2733,7 @@ R> meshgrid(1:5,10:12)
     </group></section>
 
   <section>
-    <title>Equivalents to "size"</title>
+    <title>Equivalents to ``size"</title>
 
     <group><command>
       <description>Matrix dimensions</description>
@@ -2965,6 +3107,7 @@ R> meshgrid(1:5,10:12)
       <alt package="NumPy">f = fromfile("data.txt")</alt>
       <alt package="matplotlib.pylab">f = load("data.txt")</alt>
     </Python>
+      <mathematica>Import["data.ext"]</mathematica>
     <IDL>read()</IDL>
   </command>
 
@@ -3010,6 +3153,12 @@ R> meshgrid(1:5,10:12)
     <IDL>x = read_ascii(data_start=1,delimiter=';')</IDL>
   </command>
 
+    <command>
+      <description>Reading from a URL</description>
+      <matlab>d = webread(url)</matlab>
+      <Python><alt package="pandas">read_csv(url)</alt></Python>
+      <mathematica>d = Import[url]</mathematica>
+    </command>
   <command>
     <description>Writing to a file (2d)</description>
     <matlab>save -ascii data.txt f</matlab>
@@ -3018,6 +3167,7 @@ R> meshgrid(1:5,10:12)
       <alt package="matplotlib.pylab"
 	    >save('data.csv', f, fmt='%.6f', delimiter=';')</alt>
     </Python>
+    <mathematica>Export["data.csv",d]</mathematica>
   </command>
 
   <command>
@@ -3083,6 +3233,7 @@ R> meshgrid(1:5,10:12)
 	<cmd>plot(a)</cmd>
 	<plot file="python/1d.pdf"/>
       </Python>
+        <mathematica>ListLinePlot[a]</mathematica>
       <IDL>plot, a</IDL>
     </command>
 
@@ -3097,6 +3248,7 @@ R> meshgrid(1:5,10:12)
         <cmd>plot(x[:,0],x[:,1],'o')</cmd>
 	<plot file="python/xyplot.pdf"/>
       </Python>
+      <mathematica>ListPlot[Transpose[{a,b}]]</mathematica>
       <IDL>plot, x(1,*), x(2,*)</IDL>
     </command>
 
@@ -3135,6 +3287,7 @@ R> meshgrid(1:5,10:12)
 	<cmd>plot(x2,y2,'o')</cmd><!-- , hold=True -->
 	<cmd>show() # as normal</cmd>
       </Python>
+      <mathematica>ListPlot[{Transpose[{x1, y1}], Transpose[{x2, y2}]}]</mathematica>
       <IDL>
 	<cmd>plot, x1, y1</cmd>
 	<cmd>oplot, x2, y2</cmd>
@@ -3147,6 +3300,7 @@ R> meshgrid(1:5,10:12)
       <Python package="matplotlib.pylab">
 	<cmd>subplot(211)</cmd>
       </Python>
+      <mathematica>GraphicsGrid[...]</mathematica>
       <IDL>!p.multi(0,2,1)</IDL>
     </command>
 
@@ -3160,6 +3314,9 @@ R> meshgrid(1:5,10:12)
         <Python package="matplotlib.pylab"
                 >plot(x,y,color='r',marker='o')</Python>
 	-->
+      <mathematica>ListLinePlot[Transpose[{x, y}],
+ PlotStyle -> {Hue[0.63, 0.66, 0.64], Dashing -> Medium}, 
+ PlotMarkers <![CDATA[->]]> {Automatic, 12}]</mathematica>
 	<IDL>plot, x,y, line=1, psym=-1</IDL><!-- color? -->
     </command>
 
@@ -3184,6 +3341,7 @@ R> meshgrid(1:5,10:12)
 	</Octave>
 	<R>plot(c(1:10,10:1), asp=1)</R>
 	<Python package="matplotlib.pylab">figure(figsize=(6,6))</Python>
+        <mathematica>ListPlot[z, AspectRatio -<![CDATA[>]]> 1]</mathematica>
 	<gnuplot>set size ratio -1</gnuplot>
       </command>
 
@@ -3218,6 +3376,7 @@ R> meshgrid(1:5,10:12)
 	  <cmd>xlabel('x-axis')</cmd>
 	  <cmd>ylabel('y-axis')</cmd>
 	</matlab>
+        <mathematica>Plot[...,Frame-<![CDATA[>]]>True,FrameLabel-<![CDATA[>]]>{x,y}]></mathematica>
 	<R>
 	  <cmd>plot(1:10, main="title",</cmd>
 	  <cmd>  xlab="x-axis", ylab="y-axis")</cmd>
@@ -3254,6 +3413,7 @@ R> meshgrid(1:5,10:12)
 	<matlab>semilogy(a)</matlab>
 	<R>plot(x,y, log="y")</R>
 	<Python package="matplotlib.pylab">semilogy(a)</Python>
+          <mathematica>ListLogPlot[a]</mathematica>
 	<IDL>
 	  <alt>plot, x,y, /YLOG</alt>
 	  <alt>plot_io, x,y</alt>
@@ -3265,6 +3425,7 @@ R> meshgrid(1:5,10:12)
 	<matlab>semilogx(a)</matlab>
 	<R>plot(x,y, log="x")</R>
 	<Python package="matplotlib.pylab">semilogx(a)</Python>
+        <mathematica>ListLogLinearPlot[a]</mathematica>
 	<IDL>
 	  <alt>plot, x,y, /XLOG</alt>
 	  <alt>plot_oi, x,y</alt>
@@ -3276,6 +3437,7 @@ R> meshgrid(1:5,10:12)
 	<matlab>loglog(a)</matlab>
 	<R>plot(x,y, log="xy")</R>
 	<Python package="matplotlib.pylab">loglog(a)</Python>
+        <mathematica>ListLogLogPlot[a]</mathematica>
 	<IDL>plot_oo, x,y</IDL>
       </command>
 
@@ -3793,6 +3955,7 @@ R> meshgrid(1:5,10:12)
     <command>
       <description>Set unique</description>
       <matlab>unique(a)</matlab>
+      <mathematica>DeleteDuplicates[a]</mathematica>
       <!--<Octave><alt>unique(a)</alt><alt>create_set(a)</alt></Octave>-->
       <R>unique(a)</R>
 	<!--
@@ -3821,6 +3984,7 @@ R> meshgrid(1:5,10:12)
         <alt>a.union(b)</alt>
 	<plot file="figures/sett-union.pdf" width="20mm"/>
       </Python>
+      <mathematica>Union[a,b]</mathematica>
       <maxima package="SET">union(a,b)</maxima>
       <latex><![CDATA[
         a \cup b =
@@ -3846,6 +4010,7 @@ R> meshgrid(1:5,10:12)
         <alt>a.intersection(b)</alt>
 	<plot file="figures/sett-intersection.pdf" width="20mm"/>
       </Python>
+      <mathematica>Intersection[a,b]</mathematica>
       <maxima package="SET">intersect(a,b)</maxima>
       <latex>
 	a \cap b =
@@ -3867,6 +4032,7 @@ R> meshgrid(1:5,10:12)
         <alt>a.difference(b)</alt>
 	<plot file="figures/sett-difference.pdf" width="20mm"/>
       </Python>
+      <mathematica>Complement[a,b]</mathematica>
       <maxima package="SET">
          <alt>setdifference(a,b)</alt>
          <alt>complement(b,a)</alt>
@@ -3931,6 +4097,7 @@ R> meshgrid(1:5,10:12)
 	<alt package="Numeric">average(a [,axis=0])</alt>
 	<alt package="scipy.stats,MLab,pylab">mean(a [,axis=0])</alt>
       </Python>
+      <mathematica>Mean[a]</mathematica>
       <IDL>mean(a)</IDL>
       <axiom>mean a</axiom>
     </command>
@@ -3955,6 +4122,7 @@ R> meshgrid(1:5,10:12)
         <alt package="NumPy">median(a)</alt>
         <alt package="scipy.stats,MLab,pylab">median(a [,axis=0])</alt>
       </Python>
+      <mathematica>Median[a]</mathematica>
       <IDL>median(a)</IDL>
       <axiom>median(a)</axiom>
     </command>
@@ -3967,6 +4135,7 @@ R> meshgrid(1:5,10:12)
         <alt package="NumPy">a.std(axis=0)</alt>
         <alt package="scipy.stats,MLab,pylab">std(a [,axis=0])</alt>
       </Python>
+      <mathematica>StandardDeviation[a]</mathematica>
       <IDL>stddev(a)</IDL>
     </command>
 
@@ -3978,6 +4147,7 @@ R> meshgrid(1:5,10:12)
         <alt package="NumPy">a.var(axis=0)</alt>
         <alt package="scipy.stats">var(a)</alt>
       </Python>
+      <mathematica>Variance[a]</mathematica>
       <IDL>variance(a)</IDL>
     </command>
 
@@ -3989,6 +4159,7 @@ R> meshgrid(1:5,10:12)
         <alt package="NumPy">correlate(x,y)</alt>
         <alt package="scipy.stats,MLab,pylab">corrcoef(x,y)</alt>
       </Python>
+      <mathematica>Correlation[x,y]</mathematica>
       <IDL>correlate(x,y)</IDL>
     </command>
 
@@ -3997,6 +4168,7 @@ R> meshgrid(1:5,10:12)
       <matlab>cov(x,y)</matlab>
       <R>cov(x,y)</R>
       <Python package="scipy.stats,MLab,pylab">cov(x,y)</Python>
+      <mathematica>Covariance[x,y]</mathematica>
     </command>
 
     </group>
@@ -4106,6 +4278,7 @@ R> meshgrid(1:5,10:12)
 	<matlab>roots([1 -1 -1])</matlab>
 	<R>polyroot(c(1,-1,-1))</R>
         <Python package="NumPy">roots()</Python>
+        <mathematica>Solve[x^2-x-1==0,x]</mathematica>
 	<latex>x^2 - x - 1 = 0</latex>
       </command>
 
@@ -4121,6 +4294,7 @@ R> meshgrid(1:5,10:12)
       <command>
 	<description>Solve symbolic equations</description>
 	<matlab package="Symbolic,Maple">solve('1/x = x-1')</matlab>
+        <mathematica>Solve[1/x == x-1]</mathematica>
 	<latex>\frac{1}{x} = x-1</latex>
       </command>
 
@@ -4179,6 +4353,10 @@ R> polyval(c(1,2,1,2),1:10)   should work.
       <command>
 	<description>Solve differential equations</description>
 	<matlab></matlab>
+        <mathematica>
+          <alt>DSolve[...]</alt>
+          <alt>NDSolve[...]</alt>
+        </mathematica>
       </command>
 
       </group>
@@ -4218,6 +4396,30 @@ R> polyval(c(1,2,1,2),1:10)   should work.
       <IDL>convol()</IDL>
     </command>
 
+    </group>
+  </section>
+
+  <section>
+    <title>Data Sets</title>
+    <group>
+    <command>
+      <description>Data set creation</description>
+      <matlab>ds = readtable('file.csv')</matlab>
+      <Python package="pandas">ds = read_csv('file.csv')</Python>
+      <mathematica>ds = Import['file.csv', 'CSV']; ds = Dataset[AssociationThread[First[Data],#1]<![CDATA[&]]> /@ Rest[data]];</mathematica>
+    </command>
+    <command>
+      <description>Access column with label A in dataset d</description>
+      <matlab>ds.A</matlab>
+      <Python package="pandas">ds['A']</Python>
+      <mathematica>ds[All,"A"]</mathematica>
+    </command>
+    <command>
+      <description>Access column with label A in dataset d with condition</description>
+      <matlab>ds.A(ds.A<![CDATA[>]]>0)</matlab>
+      <Python>ds[ds['A'<![CDATA[>]]>0]['A']</Python>
+      <mathematica>ds[Select[#A<![CDATA[>]]>0<![CDATA[&]]>],A]</mathematica>
+      </command>
     </group>
   </section>
 
@@ -4431,6 +4633,7 @@ R> polyval(c(1,2,1,2),1:10)   should work.
       <!--<Octave>for i=1:5; disp(i); endfor</Octave>-->
       <R>for(i in 1:5) print(i)</R>
       <Python>for i in range(1,6): print(i)</Python>
+      <mathematica>For[i=0,i<![CDATA[<]]>6,i++,Print[i]]</mathematica>
       <IDL>for k=1,5 do print,k</IDL>
     </command>
 
@@ -4453,6 +4656,9 @@ R> polyval(c(1,2,1,2),1:10)   should work.
 	<cmd>    print(i)</cmd>
 	<cmd>    print(i*2)</cmd>
       </Python>
+      <mathematica>
+        <cmd>For[i=0,i<![CDATA[<]]>5,i++,Print[i];Print[i i]]</cmd>
+      </mathematica>
       <IDL>
 	<cmd>for k=1,5 do begin $</cmd>
 	<cmd><![CDATA[    print, i &$]]></cmd>
@@ -4490,12 +4696,15 @@ endwhile
       <!--<Octave>if 1>0 a=100; endif</Octave>-->
       <R><![CDATA[if (1>0) a <- 100]]></R>
       <Python>if 1>0: a=100</Python>
+      <mathematica>If[1<![CDATA[>]]>0,a=100]</mathematica>
       <IDL>if 1 gt 0 then a=100</IDL>
     </command>
 
     <command>
       <description>if-else-statement</description>
       <matlab>if 1>0 a=100; else a=0; end</matlab>
+      <python>if 1>0: a=100 else: a=0</python>
+      <mathematica>If[1<![CDATA[>]]>0,a=100, a=0]</mathematica>
       <IDL>if 1 gt 0 then a=100 else a=0</IDL>
     </command>
 
@@ -4539,6 +4748,7 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
     <group><command>
       <description>Most recent evaluated expression</description>
       <matlab>ans</matlab>
+      <mathematica>%</mathematica>
       <R>.Last.value</R>
       <axiom>%</axiom>
       <maxima>%</maxima>
@@ -4554,6 +4764,7 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
     <command>
       <description>Clear variable $x$ from memory</description>
       <matlab><alt>clear x</alt><alt>clear [all]</alt></matlab>
+      <mathematica>Clear[x]</mathematica>
       <R>rm(x)</R>
       <axiom>)clear properties x</axiom>
     </command>
@@ -4563,6 +4774,7 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
       <matlab>disp(a)</matlab>
       <R>print(a)</R>
       <Python>print a</Python>
+      <mathematica>Print[a]</mathematica>
       <IDL>print, a</IDL>
     </command>
 
@@ -4599,6 +4811,7 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
         <alt>dir()</alt>
       </R>
       <Python package="os">os.listdir(".")</Python>
+        <mathematica>FileNames[]</mathematica>
       <IDL>dir</IDL>
     </command>
 
@@ -4607,6 +4820,7 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
       <matlab>what</matlab>
       <R>list.files(pattern="\.r$")</R>
       <Python package="grep">grep.grep("*.py")</Python>
+      <mathematica>FileNames[{"*.wl","*.nb"}]</mathematica>
     </command>
 
     <command>
@@ -4614,6 +4828,7 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
       <matlab>pwd</matlab>
       <R>getwd()</R>
       <Python package="os">os.getcwd()</Python>
+      <mathematica>Directory[]</mathematica>
       <gnuplot>pwd</gnuplot>
       <IDL>sd</IDL>
     </command>
@@ -4624,6 +4839,7 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
       <scilab>chdir('foo')</scilab>
       <R>setwd('foo')</R>
       <Python package="os">os.chdir('foo')</Python>
+      <mathematica>SetDirectory["foo"]</mathematica>
       <gnuplot>cd 'foo'</gnuplot>
       <IDL><alt>cd,'foo</alt><alt>sd,'foo</alt></IDL>
       <axiom>)cd "foo"</axiom>
@@ -4638,7 +4854,9 @@ a <- switch(as.character(i),"1"=66, "5"=77, -99)
       <Python package="os">
         <alt>os.system('notepad')</alt>
 	<alt>os.popen('notepad')</alt>
+        <alt>subprocess.call(['notepad'])</alt>
       </Python>
+      <mathematica>RunProcess["command"]</mathematica>
       <gnuplot>!notepad</gnuplot>
       <IDL>spawn,'notepad'</IDL>
     </command>
