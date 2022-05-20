@@ -892,10 +892,18 @@
     <section>
       <title>Missing values; IEEE-754 floating point status flags</title>
       <group>
+	<command>
+        <description>Missing value</description>
+        <matlab>NaN</matlab>
+        <Python package="numarray.ieeespecial">nan</Python>
+	<R>NA</R>
+        <scilab>%nan</scilab>
+      </command>
       <command>
         <description>Not a Number</description>
         <matlab>NaN</matlab>
         <Python package="numarray.ieeespecial">nan</Python>
+	<R>NaN</R>
         <scilab>%nan</scilab>
       </command>
 
